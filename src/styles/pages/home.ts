@@ -31,6 +31,15 @@ const bannerHueRotate = keyframes`
   }
 `;
 
+const bannerReveal = keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 10%;
+  }
+`;
+
 export const Banner = styled.div`
   display: flex;
   justify-content: center;
@@ -192,7 +201,13 @@ export const Banner = styled.div`
     pointer-events: none;
 
     filter: grayscale(1);
+    animation: ${bannerReveal} 3s ease-in;
     /* animation: ${bannerHueRotate} 5s ease-in-out infinite alternate; */
+  }
+
+  .scroll {
+    pointer-events: none;
+    user-select: none;
   }
 
   @media (min-height: 650px) {
@@ -842,6 +857,11 @@ export const RecentProjects = styled.div`
             height: 100%;
             max-height: 230px;
           }
+
+          > p {
+            width: calc(100vw - 2.5rem);
+            text-align: center;
+          }
         }
       }
     }
@@ -849,9 +869,11 @@ export const RecentProjects = styled.div`
     @media (max-width: 768px) {
       margin: 2rem auto;
 
-      .container .info {
-        > span {
-          font-size: 2rem;
+      .container {
+        .info {
+          > span {
+            font-size: 2rem;
+          }
         }
       }
     }
