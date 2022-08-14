@@ -8,6 +8,7 @@ import {
   OtherVideosContainer,
   RecentVideoContainer,
 } from "~/styles/pages/design-portfolio";
+import { Player, Video, Ui } from "@vime/react";
 import enUS from "date-fns/locale/en-US";
 import { PlayCircle, YoutubeLogo } from "phosphor-react";
 import Link from "next/link";
@@ -151,6 +152,17 @@ export default function DesignerPortfolio({ videosData }) {
         <title>Design Portfolio • gelzin</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
+
+      <Player>
+        <Video>
+          <source
+            data-src={`https://www.youtube.com/embed/${mostRecentVideo.resourceId.videoId}?loop=1`}
+            type="video/mp4"
+          />
+        </Video>
+
+        <Ui />
+      </Player>
 
       <RecentVideoContainer>
         {mostRecentVideo && mostRecentVideoStats ? (
