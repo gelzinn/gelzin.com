@@ -381,7 +381,7 @@ export const OtherVideosContainer = styled.div`
         /* background: var(--shape-light); */
 
         padding: 1rem 0;
-        line-height: 100%;
+        line-height: 120%;
         z-index: 2;
 
         > a {
@@ -400,7 +400,7 @@ export const OtherVideosContainer = styled.div`
           }
         }
 
-        @media (max-width: 500px) {
+        @media (max-width: 378px) {
           flex-direction: column;
           text-align: center;
         }

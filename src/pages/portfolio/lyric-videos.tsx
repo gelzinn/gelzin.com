@@ -8,104 +8,16 @@ import {
   OtherVideosContainer,
   RecentVideoContainer,
 } from "~/styles/pages/design-portfolio";
-import { Player, Video, Ui } from "@vime/react";
 import enUS from "date-fns/locale/en-US";
 import { PlayCircle, YoutubeLogo } from "phosphor-react";
 import Link from "next/link";
 import BackArrow from "~/components/NavigationIcons/BackArrow";
-
-type SingleVideoResponse = {
-  channelId: string;
-  channelTitle: string;
-  description: string;
-  publishedAt: string;
-  resourceId: {
-    videoId: string;
-  };
-  thumbnails: {
-    default: {
-      url: string;
-      width: number;
-      height: number;
-    };
-    standard: {
-      url: string;
-      width: number;
-      height: number;
-    };
-    medium: {
-      url: string;
-      width: number;
-      height: number;
-    };
-    high: {
-      url: string;
-      width: number;
-      height: number;
-    };
-    maxres: {
-      url: string;
-      width: number;
-      height: number;
-    };
-  };
-  title: string;
-  videoOwnerChannelTitle: string;
-  videoOwnerChannelId: string;
-};
-
-type MostRecentVideoStats = {
-  commentCount: string;
-  favoriteCount: string;
-  likeCount: string;
-  viewCount: string;
-};
-
-type VideoResponse = {
-  [x: string]: any;
-  etag: string;
-  id: string;
-  kind: string;
-  snippet: {
-    channelId: string;
-    channelTitle: string;
-    description: string;
-    publishedAt: string;
-    resourceId: {
-      videoId: string;
-    };
-    thumbnails: {
-      default: {
-        url: string;
-        width: number;
-        height: number;
-      };
-      standard: {
-        url: string;
-        width: number;
-        height: number;
-      };
-      medium: {
-        url: string;
-        width: number;
-        height: number;
-      };
-      high: {
-        url: string;
-        width: number;
-        height: number;
-      };
-      maxres: {
-        url: string;
-        width: number;
-        height: number;
-      };
-    };
-    title: string;
-    videoOwnerChannelTitle: string;
-    videoOwnerChannelId: string;
-  };
-};
+import {
+  MostRecentVideoStats,
+  SingleVideoResponse,
+  VideoResponse,
+} from "~/models/ytVideoResponse";
+import useYTVideoViews from "~/hooks/useYTVideoViews";
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const res = await fetch(
@@ -122,6 +34,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
 export default function DesignerPortfolio({ videosData }) {
   const [videosList, setVideosList] = useState<VideoResponse>();
+  const [videosListStats, setVideosListStats] = useState({});
   const [mostRecentVideo, setMostRecentVideo] = useState<SingleVideoResponse>();
   const [mostRecentVideoStats, setMostRecentVideoStats] =
     useState<MostRecentVideoStats>();
@@ -146,23 +59,43 @@ export default function DesignerPortfolio({ videosData }) {
     }
   }, [mostRecentVideo]);
 
+  useEffect(() => {
+    if (videosList) {
+      videosList.map((video: VideoResponse) => {
+        if (
+          video.snippet.resourceId.videoId ===
+          mostRecentVideo.resourceId.videoId
+        ) {
+          return;
+        }
+
+        const getViews = async () => {
+          const res = await fetch(
+            `https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${video.snippet.resourceId.videoId}&key=${process.env.YT_API_KEY}`
+          );
+
+          const dataWithoutStats = await res.json();
+          const data = dataWithoutStats.items[0]?.statistics;
+
+          setVideosListStats({
+            ...videosListStats,
+            id: video.snippet.resourceId.videoId,
+            views: data?.viewCount,
+          });
+        };
+
+        getViews();
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [videosList]);
+
   return (
     <>
       <Head>
         <title>Design Portfolio • gelzin</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-
-      <Player>
-        <Video>
-          <source
-            data-src={`https://www.youtube.com/embed/${mostRecentVideo.resourceId.videoId}?loop=1`}
-            type="video/mp4"
-          />
-        </Video>
-
-        <Ui />
-      </Player>
 
       <RecentVideoContainer>
         {mostRecentVideo && mostRecentVideoStats ? (
@@ -281,26 +214,28 @@ export default function DesignerPortfolio({ videosData }) {
                     />
                   </div>
                   <footer>
-                    <b>
-                      {video.snippet.title
-                        .replace(/()/g, "")
-                        .replace("|", "")
-                        .replace(/'/g, "")
-                        .replace(/"/g, "")
-                        .replace("Tipografia", "")
-                        .replace("Lyric", "")
-                        .replace("Video", "")
-                        .replace("Oficial", "")}
-                    </b>
-                    <p>
-                      {format(
-                        new Date(video.snippet.publishedAt),
-                        "MMM' 'd' • 'u",
-                        {
-                          locale: enUS,
-                        }
-                      )}
-                    </p>
+                    <div>
+                      <b>
+                        {video.snippet.title
+                          .replace(/()/g, "")
+                          .replace("|", "")
+                          .replace(/'/g, "")
+                          .replace(/"/g, "")
+                          .replace("Tipografia", "")
+                          .replace("Lyric", "")
+                          .replace("Video", "")
+                          .replace("Oficial", "")}
+                      </b>
+                      <p>
+                        {format(
+                          new Date(video.snippet.publishedAt),
+                          "MMM' 'd' • 'u",
+                          {
+                            locale: enUS,
+                          }
+                        )}
+                      </p>
+                    </div>
                   </footer>
                 </li>
               );
