@@ -582,19 +582,9 @@ export const OtherProjectsContainer = styled.div`
               }
             }
 
-            @media (min-width: 768px) {
-              & + li {
-                border-left: 1px solid var(--shape);
-              }
+            & + li {
+              border-left: 1px solid var(--shape);
             }
-
-            @media (max-width: 768px) {
-              width: unset;
-            }
-          }
-
-          @media (max-width: 768px) {
-            gap: 1rem;
           }
         }
       }

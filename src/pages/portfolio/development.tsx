@@ -152,6 +152,21 @@ export default function DesignerPortfolio({ reposData }) {
                       return;
                     }
 
+                    const getRepoLanguages = () => {
+                      const languagesPromises = [];
+                      const languagesList = [];
+
+                      languagesPromises.push(
+                        fetch(repo.languages_url).then((response) =>
+                          response.json()
+                        )
+                      );
+
+                      return Promise.all(languagesPromises);
+                    };
+
+                    getRepoLanguages();
+
                     return (
                       <li key={repo.id}>
                         <div className="info">
