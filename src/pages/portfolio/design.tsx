@@ -17,7 +17,7 @@ import {
   SingleVideoResponse,
   VideoResponse,
 } from "~/models/ytVideoResponse";
-import useYTVideoViews from "~/hooks/useYTVideoViews";
+import LoadingScreen from "~/components/Loading/LoadingScreen";
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const res = await fetch(
@@ -97,9 +97,9 @@ export default function DesignerPortfolio({ videosData }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      <RecentVideoContainer>
-        {mostRecentVideo && mostRecentVideoStats ? (
-          <>
+      {mostRecentVideo && mostRecentVideoStats ? (
+        <>
+          <RecentVideoContainer>
             <BackArrow />
             <div className="about-video">
               <div className="heading">
@@ -173,77 +173,79 @@ export default function DesignerPortfolio({ videosData }) {
                 alt={mostRecentVideo.title}
               />
             </div>
+          </RecentVideoContainer>
+          <>
+            {videosList ? (
+              <OtherVideosContainer>
+                <div className="title">
+                  <span>Other videos</span>
+                  <p>The projects are in chronological order.</p>
+                </div>
+                <ul className="videos">
+                  {videosList.map((video: VideoResponse) => {
+                    if (
+                      video.snippet.thumbnails.standard ===
+                      mostRecentVideo.thumbnails.standard
+                    ) {
+                      return;
+                    }
+
+                    if (!video.snippet.thumbnails.standard) {
+                      return;
+                    }
+
+                    return (
+                      <li key={video.id}>
+                        <div className="banner">
+                          <Link
+                            href={`https://youtube.com/watch?v=${video.snippet.resourceId.videoId}`}
+                            passHref
+                          >
+                            <a target="_blank" rel="noopener noreferrer">
+                              <PlayCircle />
+                            </a>
+                          </Link>
+                          <img
+                            src={video.snippet.thumbnails.standard?.url}
+                            alt={video.title}
+                          />
+                        </div>
+                        <footer>
+                          <div>
+                            <b>
+                              {video.snippet.title
+                                .replace(/()/g, "")
+                                .replace("|", "")
+                                .replace(/'/g, "")
+                                .replace(/"/g, "")
+                                .replace("Tipografia", "")
+                                .replace("Lyric", "")
+                                .replace("Video", "")
+                                .replace("Oficial", "")}
+                            </b>
+                            <p>
+                              {format(
+                                new Date(video.snippet.publishedAt),
+                                "MMM' 'd' • 'u",
+                                {
+                                  locale: enUS,
+                                }
+                              )}
+                            </p>
+                          </div>
+                        </footer>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </OtherVideosContainer>
+            ) : (
+              <LoadingCircle />
+            )}
           </>
-        ) : (
-          <LoadingCircle />
-        )}
-      </RecentVideoContainer>
-      {videosList ? (
-        <OtherVideosContainer>
-          <div className="title">
-            <span>Other videos</span>
-            <p>The projects are in chronological order.</p>
-          </div>
-          <ul className="videos">
-            {videosList.map((video: VideoResponse) => {
-              if (
-                video.snippet.thumbnails.standard ===
-                mostRecentVideo.thumbnails.standard
-              ) {
-                return;
-              }
-
-              if (!video.snippet.thumbnails.standard) {
-                return;
-              }
-
-              return (
-                <li key={video.id}>
-                  <div className="banner">
-                    <Link
-                      href={`https://youtube.com/watch?v=${video.snippet.resourceId.videoId}`}
-                      passHref
-                    >
-                      <a target="_blank" rel="noopener noreferrer">
-                        <PlayCircle />
-                      </a>
-                    </Link>
-                    <img
-                      src={video.snippet.thumbnails.standard?.url}
-                      alt={video.title}
-                    />
-                  </div>
-                  <footer>
-                    <div>
-                      <b>
-                        {video.snippet.title
-                          .replace(/()/g, "")
-                          .replace("|", "")
-                          .replace(/'/g, "")
-                          .replace(/"/g, "")
-                          .replace("Tipografia", "")
-                          .replace("Lyric", "")
-                          .replace("Video", "")
-                          .replace("Oficial", "")}
-                      </b>
-                      <p>
-                        {format(
-                          new Date(video.snippet.publishedAt),
-                          "MMM' 'd' • 'u",
-                          {
-                            locale: enUS,
-                          }
-                        )}
-                      </p>
-                    </div>
-                  </footer>
-                </li>
-              );
-            })}
-          </ul>
-        </OtherVideosContainer>
+        </>
       ) : (
-        <LoadingCircle />
+        <LoadingScreen />
       )}
     </>
   );

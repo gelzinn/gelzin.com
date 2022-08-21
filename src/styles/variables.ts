@@ -22,6 +22,7 @@ export const Variables = css`
     --shape-hover: #29292e;
 
     --gradient-pink: #e83f5b;
+    --gradient-pink-50: #e83f5b50;
     --gradient-pink-hover: #d75c70;
     --gradient-purple: #8257e5;
     --gradient-purple-hover: #996dff;

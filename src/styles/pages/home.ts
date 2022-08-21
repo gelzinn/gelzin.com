@@ -744,6 +744,7 @@ export const RecentProjects = styled.div`
         width: 100%;
 
         text-align: right;
+        text-transform: capitalize;
         font-weight: 400;
         font-size: 1.25rem;
         cursor: default;

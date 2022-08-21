@@ -10,6 +10,8 @@ import {
   QrCode,
   ShoppingCartSimple,
 } from "phosphor-react";
+import Navbar from "~/components/Navbar";
+import ScrollUp from "~/components/ScrollUp";
 
 type VideoResponse = {
   channelId: string;
@@ -84,6 +86,9 @@ export const getServerSideProps: GetServerSideProps = async () => {
 };
 
 export default function Home({ videosData, reposData }) {
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const [navbarVisibility, setNavbarVisibility] = useState(false);
+
   const [mostRecentVideo, setMostRecentVideo] = useState<VideoResponse>();
   const [mostRecentRepo, setMostRecentRepo] = useState<RepoResponse>();
   const [recentRepoScreenshot, setRecentRepoScreenshot] = useState<any>();
@@ -110,6 +115,27 @@ export default function Home({ videosData, reposData }) {
     }
   }, [mostRecentRepo]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const position = window.pageYOffset;
+      setScrollPosition(position);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    if (!navbarVisibility && scrollPosition >= 900) {
+      setNavbarVisibility(true);
+    }
+
+    if (navbarVisibility && scrollPosition < 900) {
+      setNavbarVisibility(false);
+    }
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [navbarVisibility, scrollPosition]);
+
   return (
     <>
       <Head>
@@ -117,6 +143,8 @@ export default function Home({ videosData, reposData }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
+      <Navbar active={navbarVisibility} />
+      {/* {scrollPosition >= 700 && <ScrollUp />} */}
       <main>
         <Banner>
           <div className="about-me">
@@ -238,7 +266,7 @@ export default function Home({ videosData, reposData }) {
                   You can get an idea of who you will be working with together
                   and realize their ideas.
                 </p>
-                <Link href="/portfolio/lyric-videos">See design works</Link>
+                <Link href="/portfolio/design">See design works</Link>
               </div>
               {mostRecentVideo && (
                 <div className="about-project">

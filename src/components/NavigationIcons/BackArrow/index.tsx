@@ -7,7 +7,11 @@ export default function BackArrow() {
 
   return (
     <ArrowContainer>
-      <ArrowLeft onClick={router.back} />
+      <ArrowLeft
+        onClick={() => {
+          router.push("/");
+        }}
+      />
     </ArrowContainer>
   );
 }
