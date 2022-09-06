@@ -16,12 +16,12 @@ import LoadingScreen from "~/components/Loading/LoadingScreen";
 import { Repositorie } from "~/models/repositoriesResponse";
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const res = await fetch("https://api.github.com/users/gelzinn/repos");
+  const res = await fetch("https://api.github.com/search/repositories?q=user:gelzinn+sort:updated_at");
   const data = await res.json();
 
   return {
     props: {
-      reposData: data,
+      reposData: data.items,
     },
   };
 };
