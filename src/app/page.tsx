@@ -73,7 +73,7 @@ export default function Home() {
               title={name}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex place-items-center gap-2 p-4 rounded-full hover:bg-zinc-500 dark:hover:bg-zinc-900 transition-colors motion-reduce:transform-none"
+              className="flex place-items-center gap-2 p-4 rounded-full hover:bg-zinc-500 dark:hover:bg-zinc-950 transition-colors motion-reduce:transform-none"
             >
               {svg}
             </a>
