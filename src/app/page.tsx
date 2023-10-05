@@ -1,8 +1,18 @@
+'use client'
+
+import { useScreen } from "@/hooks/useScreen"
 import { socials } from "@/utils/social"
 
 export default function Home() {
+  const { screenHeight } = useScreen()
+
   return (
-    <main className="flex min-h-screen flex-col items-center gap-8 justify-start lg:gap-0 lg:justify-between px-4 py-20 sm:px-16">
+    <main
+      className="flex min-h-screen flex-col items-center gap-8 justify-start lg:gap-0 lg:justify-between px-4 py-20 sm:px-16"
+      style={{
+        height: screenHeight ? screenHeight : '100vh'
+      }}
+    >
       <div
         className="fixed top-0 left-0 flex flex-col items-center justify-center w-full h-screen pb-16"
       >
