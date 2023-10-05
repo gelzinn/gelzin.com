@@ -17,7 +17,7 @@ export default function Home() {
         className="fixed top-0 left-0 flex flex-col items-center justify-center w-full h-screen pb-16"
       >
         <i
-          className="flex place-items-center pt-20 lg:pt-0 before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-pink-100 before:to-pink-300 before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-pink-200 after:via-pink-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-pink-700 before:dark:opacity-10 after:dark:from-purple-900 after:dark:via-pink-500 after:dark:opacity-40 before:lg:h-[360px] z-[-1]"
+          className="flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-pink-100 before:to-pink-300 before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-pink-200 after:via-pink-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-pink-700 before:dark:opacity-10 after:dark:from-purple-900 after:dark:via-pink-500 after:dark:opacity-40 before:lg:h-[360px] z-[-1]"
         >
           <img
             className="relative invert dark:invert-0 w-24 h-24 lg:w-32 lg:h-32"
