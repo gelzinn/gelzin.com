@@ -34,12 +34,12 @@ export default function RootLayout({
       <head>
         <link rel="shortcut icon" href="/gelzin.svg" type="image/svg+xml" />
 
-        <meta property="twitter:image" content="/metadata/og_image.png" />
-        <meta property="twitter:card" content="/metadata/og_image.png" />
+        <meta property="twitter:image" content="https://gelzin.com/metadata/og_image.png" />
+        <meta property="twitter:card" content="https://gelzin.com/metadata/og_image.png" />
         <meta property="twitter:title" content="gelzin · Software Engineer and UX/UI Designer" />
         <meta property="twitter:description" content="Software Engineer and UX/UI Designer" />
 
-        <meta property="og:image" content="/metadata/og_image.png" />
+        <meta property="og:image" content="https://gelzin.com/metadata/og_image.png" />
         <meta property="og:title" content="gelzin · Software Engineer and UX/UI Designer" />
         <meta property="og:description" content="Software Engineer and UX/UI Designer" />
         <meta property="og:url" content="https://gelzin.coom" />
