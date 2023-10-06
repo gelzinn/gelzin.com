@@ -4,6 +4,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { Inter } from 'next/font/google'
 
 import './globals.css'
+import { DocumentSizeContextProvider } from '@/contexts/DocumentSizeContext';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -36,8 +37,10 @@ export default function RootLayout({
       <body
         className={`${inter.className} overflow-x-hidden`}
       >
-        {children}
-        <Analytics />
+        <DocumentSizeContextProvider>
+          {children}
+          <Analytics />
+        </DocumentSizeContextProvider>
       </body>
     </html>
   )
