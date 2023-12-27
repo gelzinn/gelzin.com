@@ -36,14 +36,17 @@ export default function RootLayout({
           property="twitter:image"
           content="https://gelzin.com/metadata/og_image.png"
         />
+        
         <meta
           property="twitter:card"
           content="https://gelzin.com/metadata/og_image.png"
         />
+
         <meta
           property="twitter:title"
           content="gelzin · Software Engineer and UX/UI Designer"
         />
+
         <meta
           property="twitter:description"
           content="Software Engineer and UX/UI Designer"
@@ -53,15 +56,23 @@ export default function RootLayout({
           property="og:image"
           content="https://gelzin.com/metadata/og_image.png"
         />
+
         <meta
           property="og:title"
           content="gelzin · Software Engineer and UX/UI Designer"
         />
+
         <meta
           property="og:description"
           content="Software Engineer and UX/UI Designer"
         />
+
         <meta property="og:url" content="https://gelzin.coom" />
+
+        <meta
+          name="google-adsense-account"
+          content="ca-pub-8214931196684102"
+        />
       </head>
       <body className={`${inter.className} overflow-x-hidden`}>
         <DocumentSizeContextProvider>
