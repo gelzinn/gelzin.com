@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 
-import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Inter } from 'next/font/google';
 
 import '../styles/globals.css';
@@ -74,10 +73,7 @@ export default function RootLayout({
       <body
         className={`${inter.className} overflow-x-hidden bg-zinc-50 text-zinc-950 dark:bg-black dark:text-zinc-50`}
       >
-        <DocumentSizeContextProvider>
-          {children}
-          <SpeedInsights />
-        </DocumentSizeContextProvider>
+        <DocumentSizeContextProvider>{children}</DocumentSizeContextProvider>
       </body>
     </html>
   );
