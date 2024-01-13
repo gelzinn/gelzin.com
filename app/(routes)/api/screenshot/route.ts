@@ -1,1 +1,0 @@
-// https://api.screenshotmachine.com/?key=32c9af&url=screenshotmachine.com&dimension=1920x1080
