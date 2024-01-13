@@ -6,7 +6,7 @@ settings:
 
 dependencies:
   '@vercel/speed-insights':
-    specifier: 1.0.2
+    specifier: ^1.0.1
     version: 1.0.2
   clsx:
     specifier: 1.2.1
