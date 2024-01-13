@@ -19,7 +19,7 @@ export default function CVPage() {
     <main className="container relative mx-auto scroll-my-12 overflow-auto px-4 py-8 md:py-16 print:!p-0 text-zinc-50 print:text-zinc-950">
       <section className="mx-auto w-full max-w-4xl print:max-w-max bg-zinc-950 border border-zinc-800 print:border-0 divide-y divide-zinc-800 rounded-xl overflow-hidden">
         <header
-          className="flex items-center justify-between gap-4 p-4 print:p-0"
+          className="flex items-center justify-start gap-2 p-4 print:hidden bg-zinc-900/50"
           aria-label="Header"
         >
           <button
