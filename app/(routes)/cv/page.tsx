@@ -17,10 +17,7 @@ export default function CVPage() {
 
   return (
     <main className="relative mx-auto w-full max-w-4xl print:max-w-max h-fit min-h-dvh p-0 md:px-8 md:py-16 transition-all duration-200 ease-in-out">
-      <div
-        className="mx-auto w-full bg-zinc-950 md:border border-zinc-800 print:border-none print:border-t-0 divide-y divide-zinc-800 md:rounded-xl overflow-hidden"
-        aria-hidden="true"
-      >
+      <div className="mx-auto w-full bg-zinc-950 md:border border-zinc-800 print:border-none print:border-t-0 divide-y divide-zinc-800 md:rounded-xl overflow-hidden">
         <header
           className="flex items-center justify-between gap-2 p-4 print:hidden bg-zinc-900/50"
           aria-label="Header"
@@ -175,7 +172,7 @@ export default function CVPage() {
                           className={`w-4 h-4 ${
                             isActive
                               ? 'text-zinc-50 print:text-zinc-950'
-                              : 'text-zinc-500 print:text-zinc-500'
+                              : 'text-zinc-400 print:text-zinc-400'
                           }`}
                         />
                       </span>
@@ -248,7 +245,7 @@ export default function CVPage() {
                             {position.title}
                           </h4>
 
-                          <time className="block mb-4 mt-2 text-sm font-normal leading-none text-zinc-500">
+                          <time className="block mb-4 mt-2 text-sm font-normal leading-none text-zinc-400">
                             {new Date(position.startDate).toLocaleDateString(
                               language,
                               {
@@ -268,7 +265,7 @@ export default function CVPage() {
                               : 'Present'}
                           </time>
 
-                          <p className="mb-4 last-of-type:mb-0 text-sm font-normal text-zinc-400">
+                          <p className="mb-4 last-of-type:mb-0 text-sm font-normal text-zinc-300">
                             {position.summary[language]
                               .split('\n')
                               .map((line, index) => (
