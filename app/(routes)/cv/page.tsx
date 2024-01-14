@@ -1,23 +1,18 @@
 'use client';
 
-import { useRef } from 'react';
-
 import { Icon } from '@/components/icon';
 import { about, experiences, skills, social } from '@/config';
-import { exportPDF } from '@/utils/exportToPDF';
 
 export default function CVPage() {
-  const cvRef = useRef<HTMLDivElement>(null);
-
   const handleBack = () => window.history.back();
-
   const handlePrint = () => window.print();
 
-  const handleExportPDF = () => exportPDF(cvRef.current, 'CV - gelzin');
-
   return (
-    <main className="container relative mx-auto scroll-my-12 overflow-auto px-4 py-8 md:py-16 print:!p-0 text-zinc-50 print:text-zinc-950">
-      <section className="mx-auto w-full max-w-4xl print:max-w-max bg-zinc-950 border border-zinc-800 print:border-0 divide-y divide-zinc-800 rounded-xl overflow-hidden">
+    <main className="relative mx-auto w-full max-w-4xl print:max-w-max h-fit min-h-dvh p-4 md:px-8 md:py-16">
+      <div
+        className="mx-auto w-full bg-zinc-950 border border-zinc-800 print:border-none print:border-t-0 divide-y divide-zinc-800 rounded-xl overflow-hidden"
+        aria-hidden="true"
+      >
         <header
           className="flex items-center justify-start gap-2 p-4 print:hidden bg-zinc-900/50"
           aria-label="Header"
@@ -31,9 +26,12 @@ export default function CVPage() {
           </button>
         </header>
 
-        <div className="w-full max-w-4xl space-y-6 p-8" ref={cvRef} title="CV">
+        <div
+          className="w-full max-w-4xl space-y-8 p-8 max-md:pb-24"
+          aria-label="CV"
+        >
           <section
-            className="flex flex-col gap-y-4 print:gap-y-4"
+            className="flex flex-col w-full gap-y-4"
             aria-label="Information"
           >
             <div className="flex flex-col md:flex-row items-start justify-center md:justify-between gap-4">
@@ -61,7 +59,7 @@ export default function CVPage() {
 
                 <div
                   className="flex flex-wrap gap-4 md:gap-2 text-sm"
-                  title="Information"
+                  aria-label="Description"
                 >
                   <p className="w-full text-pretty text-sm text-zinc-400 print:text-zinc-950">
                     {about.description['en-US']
@@ -98,7 +96,7 @@ export default function CVPage() {
                   href={item.url}
                   target="_blank"
                   rel="noreferrer noopener"
-                  className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium p-1.5 bg-zinc-900 border border-zinc-800 text-zinc-50 hover:bg-zinc-800 hover:border-zinc-700"
+                  className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium p-1.5 bg-zinc-900 border border-zinc-800 text-zinc-50 hover:bg-zinc-800 hover:border-zinc-700 transition-colors duration-200 ease-in-out"
                 >
                   <img
                     src={item.icon}
@@ -119,12 +117,12 @@ export default function CVPage() {
           </section>
 
           <section
-            className="flex w-full min-h-0 flex-col gap-y-2"
+            className="flex flex-col w-full gap-y-4"
             aria-label="Work Experience"
           >
             <h2 className="text-xl font-bold">Work Experience</h2>
 
-            <ol className="relative border-s border-zinc-800 w-full my-4 start-4">
+            <ol className="relative border-s border-zinc-800 w-full start-4">
               {experiences
                 .sort(
                   (a, b) =>
@@ -136,40 +134,49 @@ export default function CVPage() {
                     <span className="absolute flex items-center justify-center w-8 h-8 rounded-full -start-4 ring-1 ring-zinc-800 bg-zinc-950">
                       <Icon
                         name="Briefcase"
-                        className="w-4 h-4 text-zinc-50 print:text-zinc-950"
+                        className={`w-4 h-4 text-zinc-50 print:text-zinc-950 ${item.active ? 'opacity-100' : 'opacity-50 print:opacity-35'}`}
                       />
                     </span>
 
-                    <h3 className="flex items-center mb-2 text-lg font-normal">
-                      <strong
-                        className="inline-flex items-center gap-2 font-medium text-zinc-50 print:text-zinc-950"
-                        title={item.position}
-                      >
-                        {item.company}
-                      </strong>
+                    <h3 className="flex flex-col sm:flex-row items-start sm:items-center mb-4 sm:mb-2 text-lg font-normal gap-2 sm:gap-0">
+                      <div className="flex flex-wrap items-center gap-4">
+                        <strong
+                          className="inline-flex items-center gap-2 font-medium text-zinc-50 print:text-zinc-950"
+                          title={item.position}
+                        >
+                          {item.company}
+                        </strong>
 
-                      <a
-                        href={item.website}
-                        target="_blank"
-                        rel="noreferrer noopener"
-                        className="ml-2 print:hidden"
-                      >
-                        <Icon
-                          name="ExternalLink"
-                          className="w-4 h-4 text-zinc-400"
-                        />
-                      </a>
+                        {item.website && (
+                          <a
+                            href={item.website}
+                            target="_blank"
+                            rel="noreferrer noopener"
+                            className="relative inline-flex items-center justify-center group print:hidden"
+                            aria-label={`${item.website.replace('https://', '')}`}
+                          >
+                            <Icon
+                              name="ExternalLink"
+                              className="w-4 h-4 text-emerald-400"
+                            />
+
+                            <span className="sr-only">
+                              {item.website.replace('https://', '')}
+                            </span>
+                          </a>
+                        )}
+                      </div>
 
                       <section
-                        className="flex flex-wrap gap-2 ml-auto"
-                        title="Modalities"
+                        className="flex flex-wrap gap-2 sm:ml-auto"
+                        aria-label="Modalities"
                       >
                         {item.modalities &&
                           item.modalities.length > 0 &&
                           item.modalities.map((modality, index) => (
                             <span
                               key={index}
-                              className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-xs font-medium cursor-default w-auto px-3 py-2 bg-zinc-900 border border-zinc-800 text-zinc-50 ms-4"
+                              className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-xs font-light w-auto px-2 py-1 bg-zinc-900 border border-zinc-800 text-zinc-50 print:text-zinc-950 first-of-type:ms-0 sm:first-of-type:ms-auto ms-4"
                             >
                               {modality}
                             </span>
@@ -177,7 +184,7 @@ export default function CVPage() {
                       </section>
                     </h3>
 
-                    <time className="block mb-4 text-sm font-normal leading-none text-zinc-500">
+                    <time className="block mb-4 mt-2 text-sm font-normal leading-none text-zinc-500">
                       {new Date(item.startDate).toLocaleDateString('en-US', {
                         year: 'numeric',
                         month: 'long',
@@ -221,10 +228,10 @@ export default function CVPage() {
           </section>
 
           <section
-            className="flex min-h-0 flex-col gap-y-2"
-            aria-label="Skills"
+            className="flex flex-col w-full gap-y-4"
+            aria-label="Skills &amp; Technologies"
           >
-            <h2 className="text-xl font-bold">Skills</h2>
+            <h2 className="text-xl font-bold">Skills &amp; Technologies</h2>
             <div className="flex flex-wrap gap-2">
               {Object.values(skills)
                 .flat()
@@ -242,26 +249,48 @@ export default function CVPage() {
         </div>
 
         <footer
-          className="flex items-center justify-end gap-2 p-4 print:hidden bg-zinc-900/50"
+          className="fixed left-4 right-4 bottom-4 md:left-0 md:right-0 md:bottom-0 z-10 max-md:w-[calc(100%-2rem)] w-full md:relative flex items-center justify-between gap-2 print:hidden rounded-xl md:rounded-none md:z-0 max-md:border-hidden"
           aria-label="Print and Save as PDF"
         >
-          <button
-            className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium px-3 py-1.5 bg-zinc-900 border border-zinc-800 text-zinc-50 hover:bg-zinc-800 hover:border-zinc-700"
-            onClick={handlePrint}
-          >
-            <Icon name="Printer" className="w-4 h-4 text-zinc-50" />
-            <span>Print</span>
-          </button>
+          <div className="md:hidden block fixed left-0 right-0 bottom-0 w-screen h-24 bg-gradient-to-t from-zinc-950 via-zinc-950 to-zinc-950/0 -z-10" />
 
-          <button
-            className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium px-3 py-1.5 bg-zinc-900 border border-zinc-800 text-zinc-50 hover:bg-zinc-800 hover:border-zinc-700"
-            onClick={handleExportPDF}
+          <section
+            className="flex flex-wrap items-center justify-center sm:justify-between w-full border md:border-0 border-zinc-800 bg-zinc-900/50 gap-2 p-4 rounded-xl md:rounded-none backdrop-blur-lg"
+            aria-label="Last updated"
           >
-            <Icon name="Download" className="w-4 h-4 text-zinc-50" />
-            <span>Save as PDF</span>
-          </button>
+            <div className="flex items-center gap-2" aria-label="Last updated">
+              <a
+                href={
+                  about.business_email
+                    ? `mailto:${about.business_email}`
+                    : `mailto:${about.email}`
+                }
+                className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium px-3 py-1.5 bg-zinc-900 border border-zinc-800 text-zinc-50 hover:bg-zinc-800 hover:border-zinc-700 transition-colors duration-200 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-zinc-900 disabled:hover:border-zinc-800"
+              >
+                <Icon name="Mail" className="w-4 h-4 text-zinc-50" />
+                <span>Let&apos;s chat!</span>
+
+                <div className="relative w-2 h-2 rounded-full bg-emerald-500 ml-1">
+                  <div className="absolute top-0 right-0 w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
+                </div>
+              </a>
+            </div>
+
+            <div
+              className="hidden sm:flex flex-wrap gap-2"
+              aria-label="Actions"
+            >
+              <button
+                className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium px-3 py-1.5 bg-zinc-900 border border-zinc-800 text-zinc-50 hover:bg-zinc-800 hover:border-zinc-700 transition-colors duration-200 ease-in-out"
+                onClick={handlePrint}
+              >
+                <Icon name="Printer" className="w-4 h-4 text-zinc-50" />
+                <span>Print</span>
+              </button>
+            </div>
+          </section>
         </footer>
-      </section>
+      </div>
     </main>
   );
 }

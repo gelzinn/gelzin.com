@@ -2,6 +2,7 @@ export type TAbout = {
   name: string;
   username: string;
   email: string;
+  business_email?: string;
   website: string;
   description: {
     'en-US': string;
@@ -28,6 +29,7 @@ export const about: TAbout = {
   name: 'Marcelo Augusto',
   username: 'gelzin',
   email: 'gelzin.dzn@gmail.com',
+  business_email: 'gelzin.com@gmail.com',
   website: 'https://gelzin.com',
   description: {
     'en-US':

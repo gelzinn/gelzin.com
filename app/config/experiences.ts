@@ -4,6 +4,7 @@ type TExperience = {
   website?: string;
   startDate: string;
   endDate?: string | null;
+  active?: boolean;
   modalities?: string[];
   summary: {
     'en-US': string;
@@ -26,22 +27,27 @@ export const experiences: TExperience[] = [
     website: 'https://loopscape.com.br',
     startDate: '2023-04-01T00:00:00',
     endDate: null,
+    active: true,
     summary: {
       'en-US':
         "Developed the website for the company, using Next.js and Tailwind CSS. Worked with the team on the development of the company's products, such as the LoopVet platform.\nI also made some UI/UX prototypes for the company's products.",
       'pt-BR':
         'Desenvolvi o website da empresa, utilizando Next.js e Tailwind CSS. Trabalhei com a equipe no desenvolvimento dos produtos da empresa, como a plataforma LoopVet.\nTambém fiz alguns protótipos de UI/UX para os produtos da empresa.',
     },
-    // highlights: [
-    //   {
-    //     url: "https://loopvet.com.br",
-    //     name: "LoopVet",
-    //     description: {
-    //       "en-US": "LoopVet is a platform for veterinary clinics.",
-    //       "pt-BR": "LoopVet é uma plataforma para clínicas veterinárias.",
-    //     },
-    //   },
-    // ],
+  },
+  {
+    company: 'Freelancer',
+    position: 'Motion Designer',
+    website: 'https://youtube.com/@gelzinn_',
+    startDate: '2020-08-01T00:00:00',
+    endDate: '2023-06-30T00:00:00',
+    modalities: ['Remote'],
+    summary: {
+      'en-US':
+        'I created some motion graphics for singers and bands, such as lyric videos and animated covers. Most of them were made for the brazilian market, so they are in portuguese.\nYou can check some of them on my YouTube channel. (@gelzinn_)',
+      'pt-BR':
+        'Criei algumas animações para cantores e bandas, como lyric videos e capas animadas. A maioria foi feita para o mercado brasileiro, então estão em português.\nVocê pode conferir algumas delas no meu canal do YouTube. (@gelzinn_)',
+    },
   },
   {
     company: 'C.A.Mundial',
