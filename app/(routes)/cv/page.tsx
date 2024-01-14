@@ -8,9 +8,9 @@ export default function CVPage() {
   const handlePrint = () => window.print();
 
   return (
-    <main className="relative mx-auto w-full max-w-4xl print:max-w-max h-fit min-h-dvh p-4 md:px-8 md:py-16">
+    <main className="relative mx-auto w-full max-w-4xl print:max-w-max h-fit min-h-dvh p-0 md:px-8 md:py-16 transition-all duration-200 ease-in-out">
       <div
-        className="mx-auto w-full bg-zinc-950 border border-zinc-800 print:border-none print:border-t-0 divide-y divide-zinc-800 rounded-xl overflow-hidden"
+        className="mx-auto w-full bg-zinc-950 md:border border-zinc-800 print:border-none print:border-t-0 divide-y divide-zinc-800 md:rounded-xl overflow-hidden"
         aria-hidden="true"
       >
         <header
@@ -27,7 +27,7 @@ export default function CVPage() {
         </header>
 
         <div
-          className="w-full max-w-4xl space-y-8 p-8 max-md:pb-24"
+          className="w-full max-w-4xl space-y-8 p-8 max-md:pb-24 max-md:mb-2"
           aria-label="CV"
         >
           <section
@@ -96,7 +96,7 @@ export default function CVPage() {
                   href={item.url}
                   target="_blank"
                   rel="noreferrer noopener"
-                  className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium p-1.5 bg-zinc-900 border border-zinc-800 text-zinc-50 hover:bg-zinc-800 hover:border-zinc-700 transition-colors duration-200 ease-in-out"
+                  className={`inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium p-1.5 bg-zinc-900 border border-zinc-800 text-zinc-50 hover:bg-zinc-800 hover:border-zinc-700 transition-colors duration-200 ease-in-out ${item.classNames}`}
                 >
                   <img
                     src={item.icon}
@@ -122,108 +122,137 @@ export default function CVPage() {
           >
             <h2 className="text-xl font-bold">Work Experience</h2>
 
-            <ol className="relative border-s border-zinc-800 w-full start-4">
+            <ol
+              className="relative border-s border-zinc-800 w-full h-fit start-4 mb-8"
+              aria-label="Positions"
+            >
               {experiences
                 .sort(
                   (a, b) =>
-                    new Date(b.startDate).getTime() -
-                    new Date(a.startDate).getTime(),
+                    new Date(b.positions[0].startDate).getTime() -
+                    new Date(a.positions[0].startDate).getTime(),
                 )
-                .map((item, index) => (
-                  <li className="mb-8 px-8 w-full" key={index}>
-                    <span className="absolute flex items-center justify-center w-8 h-8 rounded-full -start-4 ring-1 ring-zinc-800 bg-zinc-950">
-                      <Icon
-                        name="Briefcase"
-                        className={`w-4 h-4 text-zinc-50 print:text-zinc-950 ${item.active ? 'opacity-100' : 'opacity-50 print:opacity-35'}`}
-                      />
-                    </span>
+                .map((experience, index) => {
+                  const isLast = index === experiences.length - 1;
 
-                    <h3 className="flex flex-col sm:flex-row items-start sm:items-center mb-4 sm:mb-2 text-lg font-normal gap-2 sm:gap-0">
-                      <div className="flex flex-wrap items-center gap-4">
-                        <strong
-                          className="inline-flex items-center gap-2 font-medium text-zinc-50 print:text-zinc-950"
-                          title={item.position}
-                        >
-                          {item.company}
-                        </strong>
+                  return (
+                    <li
+                      className="relative mb-8 last-of-type:mb-0 pr-8 w-full"
+                      key={index}
+                    >
+                      <span className="absolute flex items-center justify-center w-8 h-8 rounded-full -start-4 ring-1 ring-zinc-800 bg-zinc-950">
+                        <Icon
+                          name="Briefcase"
+                          className={`w-4 h-4 text-zinc-50 print:text-zinc-950 ${
+                            experience.active
+                              ? 'opacity-100'
+                              : 'opacity-50 print:opacity-35'
+                          }`}
+                        />
+                      </span>
 
-                        {item.website && (
-                          <a
-                            href={item.website}
-                            target="_blank"
-                            rel="noreferrer noopener"
-                            className="relative inline-flex items-center justify-center group print:hidden"
-                            aria-label={`${item.website.replace('https://', '')}`}
+                      <h3 className="flex flex-col sm:flex-row items-start sm:items-center pl-8 mb-4 text-lg font-normal gap-2 sm:gap-0">
+                        <div className="flex flex-wrap items-center gap-4">
+                          <strong
+                            className="inline-flex items-center gap-2 font-medium text-zinc-50 print:text-zinc-950"
+                            aria-label="Company"
                           >
-                            <Icon
-                              name="ExternalLink"
-                              className="w-4 h-4 text-emerald-400"
-                            />
+                            {experience.company}
+                          </strong>
 
-                            <span className="sr-only">
-                              {item.website.replace('https://', '')}
-                            </span>
-                          </a>
-                        )}
-                      </div>
-
-                      <section
-                        className="flex flex-wrap gap-2 sm:ml-auto"
-                        aria-label="Modalities"
-                      >
-                        {item.modalities &&
-                          item.modalities.length > 0 &&
-                          item.modalities.map((modality, index) => (
-                            <span
-                              key={index}
-                              className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-xs font-light w-auto px-2 py-1 bg-zinc-900 border border-zinc-800 text-zinc-50 print:text-zinc-950 first-of-type:ms-0 sm:first-of-type:ms-auto ms-4"
+                          {experience.website && (
+                            <a
+                              href={experience.website}
+                              target="_blank"
+                              rel="noreferrer noopener"
+                              className="relative inline-flex items-center justify-center group print:hidden"
+                              aria-label={`${experience.website.replace('https://', '')}`}
                             >
-                              {modality}
-                            </span>
-                          ))}
-                      </section>
-                    </h3>
+                              <Icon
+                                name="ExternalLink"
+                                className="size-4 text-zinc-400"
+                              />
 
-                    <time className="block mb-4 mt-2 text-sm font-normal leading-none text-zinc-500">
-                      {new Date(item.startDate).toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'long',
-                      })}
-                      {' - '}
-                      {item.endDate
-                        ? new Date(item.endDate).toLocaleDateString('en-US', {
-                            year: 'numeric',
-                            month: 'long',
-                          })
-                        : 'Present'}
-                    </time>
+                              <span className="sr-only">
+                                {experience.website.replace('https://', '')}
+                              </span>
+                            </a>
+                          )}
+                        </div>
 
-                    <p className="mb-4 text-sm font-normal text-zinc-400">
-                      {item.summary['en-US'].split('\n').map((line, index) => (
-                        <span key={index} className="block mt-4">
-                          {line}
-                        </span>
+                        <section
+                          className="flex flex-wrap gap-2 sm:ml-auto"
+                          aria-label="Modalities"
+                        >
+                          {experience.modalities &&
+                            experience.modalities.length > 0 &&
+                            experience.modalities.map((modality, index) => (
+                              <span
+                                key={index}
+                                className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-xs font-light w-auto px-2 py-1 bg-zinc-900 border border-zinc-800 text-zinc-50 print:text-zinc-950 first-of-type:ms-0 sm:first-of-type:ms-auto ms-4"
+                              >
+                                {modality}
+                              </span>
+                            ))}
+                        </section>
+                      </h3>
+
+                      {experience.positions.map((position, index) => (
+                        <div
+                          key={index}
+                          className="pl-8 first-of-type:mt-6 mt-8 ring-1 ring-zinc-800"
+                          style={{
+                            boxShadow: isLast
+                              ? '0 0 0 1px rgb(9 9 11)'
+                              : 'none',
+                          }}
+                          aria-label="Position details"
+                        >
+                          <div className="absolute flex items-center justify-center size-2 rounded-full -ml-9 mt-2 mb-2">
+                            {isLast && (
+                              <div className="absolute -top-3 mr-px w-px h-[150%] bg-zinc-800" />
+                            )}
+                            <span className="size-2 rounded-full ring-1 ring-zinc-800 bg-zinc-950" />
+                          </div>
+
+                          <h4 className="text-base font-medium text-zinc-50 print:text-zinc-950">
+                            {position.title}
+                          </h4>
+
+                          <time className="block mb-4 mt-2 text-sm font-normal leading-none text-zinc-500">
+                            {new Date(position.startDate).toLocaleDateString(
+                              'en-US',
+                              {
+                                year: 'numeric',
+                                month: 'long',
+                              },
+                            )}
+                            {' - '}
+                            {position.endDate
+                              ? new Date(position.endDate).toLocaleDateString(
+                                  'en-US',
+                                  {
+                                    year: 'numeric',
+                                    month: 'long',
+                                  },
+                                )
+                              : 'Present'}
+                          </time>
+
+                          <p className="mb-4 last-of-type:mb-0 text-sm font-normal text-zinc-400">
+                            {position.summary['en-US']
+                              .split('\n')
+                              .map((line, index) => (
+                                <span key={index} className="block mt-4">
+                                  {line}
+                                </span>
+                              ))}
+                          </p>
+                        </div>
                       ))}
-                    </p>
-
-                    <ul className="list-disc list-inside">
-                      {item.highlights &&
-                        item.highlights.length > 0 &&
-                        item.highlights.map((highlight, index) => (
-                          <a
-                            key={index}
-                            title={highlight.name}
-                            href={highlight.url}
-                            target="_blank"
-                            rel="noreferrer noopener"
-                            className="mb-2 text-sm font-normal"
-                          >
-                            {highlight.name}
-                          </a>
-                        ))}
-                    </ul>
-                  </li>
-                ))}
+                    </li>
+                  );
+                })}
             </ol>
           </section>
 
@@ -265,7 +294,7 @@ export default function CVPage() {
                     ? `mailto:${about.business_email}`
                     : `mailto:${about.email}`
                 }
-                className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium px-3 py-1.5 bg-zinc-900 border border-zinc-800 text-zinc-50 hover:bg-zinc-800 hover:border-zinc-700 transition-colors duration-200 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-zinc-900 disabled:hover:border-zinc-800"
+                className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium px-3 py-1.5 bg-zinc-900 border border-zinc-800 text-zinc-50 hover:bg-zinc-800 hover:border-zinc-700 transition-colors duration-200 ease-in-out disabled:opacity-50"
               >
                 <Icon name="Mail" className="w-4 h-4 text-zinc-50" />
                 <span>Let&apos;s chat!</span>
@@ -281,7 +310,8 @@ export default function CVPage() {
               aria-label="Actions"
             >
               <button
-                className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium px-3 py-1.5 bg-zinc-900 border border-zinc-800 text-zinc-50 hover:bg-zinc-800 hover:border-zinc-700 transition-colors duration-200 ease-in-out"
+                className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium px-3 py-1.5 bg-zinc-900 border border-zinc-800 text-zinc-50 hover:bg-zinc-800 hover:border-zinc-700 transition-colors duration-200 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-zinc-900 disabled:hover:border-zinc-800"
+                disabled
                 onClick={handlePrint}
               >
                 <Icon name="Printer" className="w-4 h-4 text-zinc-50" />

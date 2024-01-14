@@ -3,6 +3,7 @@ type TSocial = {
   url: string;
   icon: string;
   filter?: string;
+  classNames?: string;
 };
 
 export const social = [
@@ -11,6 +12,7 @@ export const social = [
     url: 'https://gelzin.com',
     icon: 'https://gelzin.com/gelzin.svg',
     filter: 'invert(0)',
+    classNames: 'print:hidden',
   },
   {
     name: 'GitHub',
