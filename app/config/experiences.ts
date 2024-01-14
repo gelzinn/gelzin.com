@@ -119,7 +119,7 @@ export const experiences: TExperience[] = [
   {
     company: 'C.A.Mundial',
     website: 'https://camundial.com.br',
-    active: true,
+    active: false,
     modalities: ['Remote'],
     positions: [
       {

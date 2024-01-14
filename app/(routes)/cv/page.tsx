@@ -124,7 +124,7 @@ export default function CVPage() {
 
             <ol
               className="relative border-s border-zinc-800 w-full h-fit start-4 mb-8"
-              aria-label="Positions"
+              aria-label="Experiences"
             >
               {experiences
                 .sort(
@@ -134,19 +134,23 @@ export default function CVPage() {
                 )
                 .map((experience, index) => {
                   const isLast = index === experiences.length - 1;
+                  const isActive = experience.active;
 
                   return (
                     <li
                       className="relative mb-8 last-of-type:mb-0 pr-8 w-full"
                       key={index}
                     >
-                      <span className="absolute flex items-center justify-center w-8 h-8 rounded-full -start-4 ring-1 ring-zinc-800 bg-zinc-950">
+                      <span
+                        className="absolute flex items-center justify-center w-8 h-8 rounded-full -start-4 ring-1 ring-zinc-800 bg-zinc-950"
+                        title={isActive ? 'Current Active' : 'Inactive'}
+                      >
                         <Icon
                           name="Briefcase"
-                          className={`w-4 h-4 text-zinc-50 print:text-zinc-950 ${
-                            experience.active
-                              ? 'opacity-100'
-                              : 'opacity-50 print:opacity-35'
+                          className={`w-4 h-4 ${
+                            isActive
+                              ? 'text-zinc-50 print:text-zinc-950'
+                              : 'text-zinc-500 print:text-zinc-500'
                           }`}
                         />
                       </span>
@@ -200,19 +204,17 @@ export default function CVPage() {
                       {experience.positions.map((position, index) => (
                         <div
                           key={index}
-                          className="pl-8 first-of-type:mt-6 mt-8 ring-1 ring-zinc-800"
-                          style={{
-                            boxShadow: isLast
-                              ? '0 0 0 1px rgb(9 9 11)'
-                              : 'none',
-                          }}
+                          className={`pl-8 first-of-type:mt-6 mt-8 ${
+                            isLast ? 'print:ring-0 ring-1 ring-zinc-950' : ''
+                          }`}
                           aria-label="Position details"
                         >
                           <div className="absolute flex items-center justify-center size-2 rounded-full -ml-9 mt-2 mb-2">
                             {isLast && (
-                              <div className="absolute -top-3 mr-px w-px h-[150%] bg-zinc-800" />
+                              <div className="absolute -top-3 mr-px w-px h-[150%] bg-zinc-800 print:bg-zinc-950" />
                             )}
-                            <span className="size-2 rounded-full ring-1 ring-zinc-800 bg-zinc-950" />
+
+                            <span className="size-2 rounded-full ring-1 ring-zinc-800 bg-zinc-950 z-10" />
                           </div>
 
                           <h4 className="text-base font-medium text-zinc-50 print:text-zinc-950">
