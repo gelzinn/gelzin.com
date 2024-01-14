@@ -1,11 +1,19 @@
 'use client';
 
+import { useState } from 'react';
+
 import { Icon } from '@/components/icon';
 import { about, experiences, skills, social } from '@/config';
 
 export default function CVPage() {
-  const handleBack = () => window.history.back();
+  const [language, setLanguage] = useState<'en-US' | 'pt-BR'>('en-US');
+
   const handlePrint = () => window.print();
+
+  const handleChangeLanguage = () => {
+    const newLanguage = language === 'en-US' ? 'pt-BR' : 'en-US';
+    setLanguage(newLanguage);
+  };
 
   return (
     <main className="relative mx-auto w-full max-w-4xl print:max-w-max h-fit min-h-dvh p-0 md:px-8 md:py-16 transition-all duration-200 ease-in-out">
@@ -14,16 +22,33 @@ export default function CVPage() {
         aria-hidden="true"
       >
         <header
-          className="flex items-center justify-start gap-2 p-4 print:hidden bg-zinc-900/50"
+          className="flex items-center justify-between gap-2 p-4 print:hidden bg-zinc-900/50"
           aria-label="Header"
         >
-          <button
-            className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium px-3 py-1.5 bg-zinc-900 border border-zinc-800 text-zinc-50 hover:bg-zinc-800 hover:border-zinc-700"
-            onClick={handleBack}
+          <a
+            href="/"
+            className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium px-3 py-1.5 bg-zinc-900 border border-zinc-800 text-zinc-50 hover:bg-zinc-800 hover:border-zinc-700 transition-colors duration-200 ease-in-out disabled:opacity-50"
           >
             <Icon name="ArrowLeft" className="w-4 h-4 text-zinc-50" />
-            <span>Back</span>
-          </button>
+            <span>{language === 'en-US' ? 'Back' : 'Voltar'}</span>
+          </a>
+
+          <div className="flex" aria-label="Actions">
+            <button
+              className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium px-3 py-1.5 bg-zinc-900 border border-zinc-800 text-zinc-50 hover:bg-zinc-800 hover:border-zinc-700 transition-colors duration-200 ease-in-out disabled:opacity-50 rounded-e-none z-[1]"
+              onClick={handleChangeLanguage}
+            >
+              <Icon name="Globe" className="w-4 h-4 text-zinc-50" />
+              <span>{language === 'en-US' ? 'Português' : 'English'}</span>
+            </button>
+
+            <button
+              className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium px-3 py-1.5 bg-zinc-900 border border-zinc-800 text-zinc-50 hover:bg-zinc-800 hover:border-zinc-700 transition-colors duration-200 ease-in-out pointer-events-none rounded-s-none -ml-px z-0"
+              disabled
+            >
+              {language === 'en-US' ? 'US' : 'BR'}
+            </button>
+          </div>
         </header>
 
         <div
@@ -62,7 +87,7 @@ export default function CVPage() {
                   aria-label="Description"
                 >
                   <p className="w-full text-pretty text-sm text-zinc-400 print:text-zinc-950">
-                    {about.description['en-US']
+                    {about.description[language]
                       .split('\n')
                       .map((line, index) => (
                         <span
@@ -81,7 +106,7 @@ export default function CVPage() {
                       target="_blank"
                     >
                       <Icon name="MapPin" className="w-4 h-4" />
-                      <span>{about.location['en-US'].full}</span>
+                      <span>{about.location[language].full}</span>
                     </a>
                   </p>
                 </div>
@@ -204,14 +229,16 @@ export default function CVPage() {
                       {experience.positions.map((position, index) => (
                         <div
                           key={index}
-                          className={`pl-8 first-of-type:mt-6 mt-8 ${
-                            isLast ? 'print:ring-0 ring-1 ring-zinc-950' : ''
+                          className={`group/position pl-8 first-of-type:mt-6 mt-8 print:-ml-px ${
+                            isLast
+                              ? 'print:ring-0 ring-1 ring-zinc-950'
+                              : 'ring-0'
                           }`}
                           aria-label="Position details"
                         >
-                          <div className="absolute flex items-center justify-center size-2 rounded-full -ml-9 mt-2 mb-2">
+                          <div className="absolute flex items-center justify-center size-2 rounded-full -ml-9 mt-2 print:mt-0 mb-2">
                             {isLast && (
-                              <div className="absolute -top-3 mr-px w-px h-[150%] bg-zinc-800 print:bg-zinc-950" />
+                              <div className="print:hidden absolute -top-3 mr-px w-px h-[150%] bg-zinc-800" />
                             )}
 
                             <span className="size-2 rounded-full ring-1 ring-zinc-800 bg-zinc-950 z-10" />
@@ -223,7 +250,7 @@ export default function CVPage() {
 
                           <time className="block mb-4 mt-2 text-sm font-normal leading-none text-zinc-500">
                             {new Date(position.startDate).toLocaleDateString(
-                              'en-US',
+                              language,
                               {
                                 year: 'numeric',
                                 month: 'long',
@@ -232,7 +259,7 @@ export default function CVPage() {
                             {' - '}
                             {position.endDate
                               ? new Date(position.endDate).toLocaleDateString(
-                                  'en-US',
+                                  language,
                                   {
                                     year: 'numeric',
                                     month: 'long',
@@ -242,7 +269,7 @@ export default function CVPage() {
                           </time>
 
                           <p className="mb-4 last-of-type:mb-0 text-sm font-normal text-zinc-400">
-                            {position.summary['en-US']
+                            {position.summary[language]
                               .split('\n')
                               .map((line, index) => (
                                 <span key={index} className="block mt-4">
