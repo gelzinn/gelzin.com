@@ -277,63 +277,6 @@ export default function CVPage() {
                                 </span>
                               ))}
                           </p>
-
-                          <ul
-                            className="flex flex-wrap gap-2 mt-4 print:hidden w-full"
-                            aria-label="Highlights"
-                          >
-                            {position.highlights &&
-                              position.highlights.length > 0 &&
-                              position.highlights.map((highlight, index) => {
-                                return (
-                                  <a
-                                    key={index}
-                                    href={highlight.url || ''}
-                                    target="_blank"
-                                    rel="noreferrer noopener"
-                                    className={`flex flex-col items-start justify-center whitespace-nowrap rounded-md font-light w-full max-w-[335px] h-fit p-2 bg-zinc-900 border border-zinc-800 text-zinc-50 print:text-zinc-950 ${
-                                      highlight.url
-                                        ? 'hover:bg-zinc-800 hover:border-zinc-700 transition-colors duration-200 ease-in-out'
-                                        : 'cursor-default pointer-events-auto select-none'
-                                    }`}
-                                  >
-                                    {highlight.image && (
-                                      <img
-                                        src={highlight.image}
-                                        alt={highlight.name}
-                                        loading="lazy"
-                                        className="w-full max-w-sm aspect-video rounded-md border border-zinc-700 object-cover pointer-events-none select-none opacity-85"
-                                      />
-                                    )}
-
-                                    <div
-                                      className={`flex flex-col gap-2 w-full text-xs p-1 ${
-                                        highlight.image ? 'mt-2' : ''
-                                      }`}
-                                    >
-                                      <strong className="inline-flex items-center gap-2 font-medium text-zinc-50 print:text-zinc-950 whitespace-pre-line">
-                                        {highlight.name}
-                                      </strong>
-
-                                      {highlight.description && (
-                                        <p className="mb-4 last-of-type:mb-0 font-normal text-zinc-400 whitespace-pre-line leading-snug">
-                                          {highlight.description[language]
-                                            .split('\n')
-                                            .map((line, index) => (
-                                              <span
-                                                key={index}
-                                                className="block first-of-type:mt-0 mt-4"
-                                              >
-                                                {line}
-                                              </span>
-                                            ))}
-                                        </p>
-                                      )}
-                                    </div>
-                                  </a>
-                                );
-                              })}
-                          </ul>
                         </div>
                       ))}
                     </li>
