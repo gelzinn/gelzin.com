@@ -27,14 +27,14 @@ export default function CVPage() {
         </header>
 
         <div
-          className="w-full max-w-4xl space-y-8 p-8 max-md:pb-24 max-md:mb-2"
+          className="w-full max-w-4xl space-y-8 p-4 md:p-8 max-md:pb-24 max-md:mb-2"
           aria-label="CV"
         >
           <section
             className="flex flex-col w-full gap-y-4"
             aria-label="Information"
           >
-            <div className="flex flex-col md:flex-row items-start justify-center md:justify-between gap-4">
+            <div className="flex flex-col sm:flex-row items-start justify-center sm:justify-between gap-4">
               <picture className="relative flex shrink-0 overflow-hidden rounded-xl size-32 bg-zinc-900 border border-zinc-800">
                 <img
                   className="aspect-square h-full w-full pointer-events-none select-none"
