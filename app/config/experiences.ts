@@ -10,6 +10,7 @@ type TPosition = {
   highlights?: {
     url: string;
     name: string;
+    image?: string;
     description?: {
       'en-US': string;
       'pt-BR': string;
@@ -47,8 +48,9 @@ export const experiences: TExperience[] = [
         },
         highlights: [
           {
-            url: 'https://aap.loopvet.com.br',
+            url: 'https://app.loopvet.com.br',
             name: 'Loopvet - Sistema para clínica veterinária e petshop.',
+            image: '/projects/app.loopvet.com.br.jpeg',
           },
         ],
       },
@@ -66,10 +68,24 @@ export const experiences: TExperience[] = [
           {
             url: 'https://loopvet.com.br',
             name: 'Loopvet - Sistema para clínica veterinária e petshop.',
+            image: '/projects/loopvet.com.br.jpeg',
+            description: {
+              'en-US':
+                'Loopvet is a platform for veterinary clinics and petshops that helps them to manage their business and their clients.',
+              'pt-BR':
+                'Loopvet é uma plataforma para clínicas veterinárias e petshops que ajuda eles a gerenciar seus negócios e seus clientes.',
+            },
           },
           {
             url: 'https://loopscape.com.br',
             name: 'Loopscape - Empresa de desenvolvimento de software.',
+            image: '/projects/loopscape.com.br.jpeg',
+            description: {
+              'en-US':
+                'Loopscape is a software development company, focused on creating solutions for companies.',
+              'pt-BR':
+                'Loopscape é uma empresa de desenvolvimento de software, focada em criar soluções para empresas.',
+            },
           },
         ],
       },
@@ -113,6 +129,13 @@ export const experiences: TExperience[] = [
           'pt-BR':
             'Criei algumas animações para cantores e bandas, como lyric videos e capas animadas. A maioria delas foi feita para o mercado brasileiro, então estão em português.\nVocê pode conferir algumas delas no meu canal do YouTube. (@gelzinn_).',
         },
+        highlights: [
+          {
+            url: 'https://www.youtube.com/watch?v=p3uKBSFwWDA',
+            name: 'Lyric Video - Meu Tudo - Léo Brandão',
+            image: 'https://i.ytimg.com/vi/p3uKBSFwWDA/hqdefault.jpg',
+          },
+        ],
       },
     ],
   },
