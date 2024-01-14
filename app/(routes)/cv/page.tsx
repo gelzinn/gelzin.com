@@ -204,8 +204,10 @@ export default function CVPage() {
                       {experience.positions.map((position, index) => (
                         <div
                           key={index}
-                          className={`pl-8 first-of-type:mt-6 mt-8 print:-ml-px print:ring-0 ring-1 ${
-                            isLast ? 'ring-zinc-950' : 'ring-0'
+                          className={`pl-8 first-of-type:mt-6 mt-8 print:-ml-px ${
+                            isLast
+                              ? 'print:ring-0 ring-1 ring-zinc-950'
+                              : 'ring-0'
                           }`}
                           aria-label="Position details"
                         >
