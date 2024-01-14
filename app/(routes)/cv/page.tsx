@@ -204,14 +204,14 @@ export default function CVPage() {
                       {experience.positions.map((position, index) => (
                         <div
                           key={index}
-                          className={`pl-8 first-of-type:mt-6 mt-8 ${
-                            isLast ? 'print:ring-0 ring-1 ring-zinc-950' : ''
+                          className={`pl-8 first-of-type:mt-6 mt-8 print:-ml-px print:ring-0 ring-1 ${
+                            isLast ? 'ring-zinc-950' : 'ring-0'
                           }`}
                           aria-label="Position details"
                         >
-                          <div className="absolute flex items-center justify-center size-2 rounded-full -ml-9 mt-2 mb-2">
+                          <div className="absolute flex items-center justify-center size-2 rounded-full -ml-9 mt-2 print:mt-0 mb-2">
                             {isLast && (
-                              <div className="absolute -top-3 mr-px w-px h-[150%] bg-zinc-800 print:bg-zinc-950" />
+                              <div className="print:hidden absolute -top-3 mr-px w-px h-[150%] bg-zinc-800" />
                             )}
 
                             <span className="size-2 rounded-full ring-1 ring-zinc-800 bg-zinc-950 z-10" />
