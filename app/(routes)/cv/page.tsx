@@ -61,7 +61,7 @@ export default function CVPage() {
                 <img
                   className="aspect-square h-full w-full pointer-events-none select-none"
                   alt="@gelzin on LinkedIn"
-                  src="https://media.licdn.com/dms/image/D4D03AQHfWbG9xL1voQ/profile-displayphoto-shrink_800_800/0/1698112632669?e=1710374400&v=beta&t=BohAkeMwk1xpi54vCGRUc9pRtMDhAMrjFus22quzKOI"
+                  src="https://github.com/gelzinn.png"
                   width="128"
                   height="128"
                   loading="lazy"
