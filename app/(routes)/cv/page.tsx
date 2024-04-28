@@ -5,15 +5,36 @@ import { useState } from 'react';
 import { Icon } from '@/components/icon';
 import { about, experiences, skills, social } from '@/config';
 
+const formatDuration = (startDate: Date, endDate: Date) => {
+  const start = new Date(startDate);
+  const end = endDate ? new Date(endDate) : new Date();
+
+  let years = end.getFullYear() - start.getFullYear();
+  let months = end.getMonth() - start.getMonth();
+
+  if (months < 0) {
+    years--;
+    months += 12;
+  }
+
+  if (years === 0) {
+    return `${months} month${months !== 1 ? 's' : ''}`;
+  } else if (months === 0) {
+    return `${years} year${years !== 1 ? 's' : ''}`;
+  } else {
+    return `${years} year${years !== 1 ? 's' : ''} and ${months} month${months !== 1 ? 's' : ''}`;
+  }
+};
+
 export default function CVPage() {
-  const [language, setLanguage] = useState<'en-US' | 'pt-BR'>('en-US');
+  const [language] = useState<'en-US' | 'pt-BR'>('en-US');
 
   const handlePrint = () => window.print();
 
-  const handleChangeLanguage = () => {
-    const newLanguage = language === 'en-US' ? 'pt-BR' : 'en-US';
-    setLanguage(newLanguage);
-  };
+  // const handleChangeLanguage = () => {
+  //   const newLanguage = language === 'en-US' ? 'pt-BR' : 'en-US';
+  //   setLanguage(newLanguage);
+  // };
 
   return (
     <main className="relative mx-auto w-full max-w-4xl print:max-w-max h-fit min-h-dvh p-0 md:px-8 md:py-16 transition-all duration-200 ease-in-out">
@@ -33,14 +54,15 @@ export default function CVPage() {
           <div className="flex" aria-label="Actions">
             <button
               className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium px-3 py-1.5 bg-zinc-900 border border-zinc-800 text-zinc-50 hover:bg-zinc-800 hover:border-zinc-700 transition-colors duration-200 ease-in-out disabled:opacity-50 rounded-e-none z-[1]"
-              onClick={handleChangeLanguage}
+              // onClick={handleChangeLanguage}
+              disabled
             >
               <Icon name="Globe" className="w-4 h-4 text-zinc-50" />
-              <span>{language === 'en-US' ? 'Português' : 'English'}</span>
+              <span>{language !== 'en-US' ? 'Português' : 'English'}</span>
             </button>
 
             <button
-              className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium px-3 py-1.5 bg-zinc-900 border border-zinc-800 text-zinc-50 hover:bg-zinc-800 hover:border-zinc-700 transition-colors duration-200 ease-in-out pointer-events-none rounded-s-none -ml-px z-0"
+              className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium px-3 py-1.5 bg-zinc-900 border border-zinc-800 text-zinc-50 hover:bg-zinc-800 hover:border-zinc-700 transition-colors duration-200 ease-in-out pointer-events-none disabled:opacity-50 rounded-s-none -ml-px z-0"
               disabled
             >
               {language === 'en-US' ? 'US' : 'BR'}
@@ -111,30 +133,34 @@ export default function CVPage() {
             </div>
 
             <div className="flex flex-wrap gap-2 pt-1 font-mono text-sm print:hidden">
-              {social.map((item, index) => (
-                <a
-                  key={index}
-                  title={item.name}
-                  href={item.url}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className={`inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium p-1.5 bg-zinc-900 border border-zinc-800 text-zinc-50 hover:bg-zinc-800 hover:border-zinc-700 transition-colors duration-200 ease-in-out ${item.classNames}`}
-                >
-                  <img
-                    src={item.icon}
-                    alt={item.name}
-                    width="16"
-                    height="16"
-                    loading="lazy"
-                    className="w-4 max-w-4 h-4 max-h-4 object-contain pointer-events-none select-none"
-                    style={item.filter ? { filter: item.filter } : {}}
-                  />
+              {social.map((item, index) => {
+                const url = item.url.split('/')[item.url.split('/').length - 1];
 
-                  <span className="text-xs inline-flex items-center justify-center ml-2">
-                    {item.url.split('/')[item.url.split('/').length - 1]}
-                  </span>
-                </a>
-              ))}
+                return (
+                  <a
+                    key={index}
+                    title={item.name}
+                    href={item.url}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className={`inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium p-1.5 bg-zinc-900 border border-zinc-800 text-zinc-50 hover:bg-zinc-800 hover:border-zinc-700 transition-colors duration-200 ease-in-out ${item.classNames}`}
+                  >
+                    <img
+                      src={item.icon}
+                      alt={item.name}
+                      width="16"
+                      height="16"
+                      loading="lazy"
+                      className="w-4 max-w-4 h-4 max-h-4 object-contain pointer-events-none select-none"
+                      style={item.filter ? { filter: item.filter } : {}}
+                    />
+
+                    <span className="text-xs inline-flex items-center justify-center ml-2">
+                      {url}
+                    </span>
+                  </a>
+                );
+              })}
             </div>
           </section>
 
@@ -156,7 +182,7 @@ export default function CVPage() {
                 )
                 .map((experience, index) => {
                   const isLast = index === experiences.length - 1;
-                  const isActive = experience.active;
+                  const isActive = experience.active || false;
 
                   return (
                     <li
@@ -172,13 +198,13 @@ export default function CVPage() {
                           className={`w-4 h-4 ${
                             isActive
                               ? 'text-zinc-50 print:text-zinc-950'
-                              : 'text-zinc-400 print:text-zinc-400'
+                              : 'text-zinc-700 print:text-zinc-500'
                           }`}
                         />
                       </span>
 
-                      <h3 className="flex flex-col sm:flex-row items-start sm:items-center pl-8 mb-4 text-lg font-normal gap-2 sm:gap-0">
-                        <div className="flex flex-wrap items-center gap-4">
+                      <h3 className="flex flex-col items-start pl-8 mb-4 text-lg font-normal gap-2">
+                        <div className="flex flex-wrap items-center gap-4 w-full">
                           <strong
                             className="inline-flex items-center gap-2 font-medium text-zinc-50 print:text-zinc-950"
                             aria-label="Company"
@@ -186,12 +212,30 @@ export default function CVPage() {
                             {experience.company}
                           </strong>
 
+                          <div
+                            className="flex items-center justify-center gap-2 size-4"
+                            aria-label="Status"
+                            title={isActive ? 'Active' : 'Inactive'}
+                          >
+                            {isActive ? (
+                              <div className="relative inline-flex items-center justify-center gap-2 font-medium text-zinc-50 print:text-zinc-950 size-full">
+                                <div className="relative w-2 h-2 rounded-full bg-emerald-500">
+                                  <div className="absolute top-0 right-0 w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
+                                </div>
+                              </div>
+                            ) : (
+                              <div className="relative inline-flex items-center justify-center gap-2 font-medium text-zinc-50 print:text-zinc-950 size-full">
+                                <div className="relative w-2 h-2 rounded-full bg-rose-500/50" />
+                              </div>
+                            )}
+                          </div>
+
                           {experience.website && (
                             <a
                               href={experience.website}
                               target="_blank"
                               rel="noreferrer noopener"
-                              className="relative inline-flex items-center justify-center group print:hidden"
+                              className="relative inline-flex items-center justify-center group print:hidden size-4 ml-auto"
                               aria-label={`${experience.website.replace('https://', '')}`}
                             >
                               <Icon
@@ -207,7 +251,7 @@ export default function CVPage() {
                         </div>
 
                         <section
-                          className="flex flex-wrap gap-2 sm:ml-auto"
+                          className="flex flex-wrap gap-2"
                           aria-label="Modalities"
                         >
                           {experience.modalities &&
@@ -245,25 +289,34 @@ export default function CVPage() {
                             {position.title}
                           </h4>
 
-                          <time className="block mb-4 mt-2 text-sm font-normal leading-none text-zinc-400">
-                            {new Date(position.startDate).toLocaleDateString(
-                              language,
-                              {
-                                year: 'numeric',
-                                month: 'long',
-                              },
+                          <section
+                            className="flex items-center justify-start gap-2  mt-2 mb-4"
+                            aria-label="Highlights"
+                            title={formatDuration(
+                              new Date(position.startDate),
+                              new Date(position.endDate || new Date()),
                             )}
-                            {' - '}
-                            {position.endDate
-                              ? new Date(position.endDate).toLocaleDateString(
-                                  language,
-                                  {
-                                    year: 'numeric',
-                                    month: 'long',
-                                  },
-                                )
-                              : 'Present'}
-                          </time>
+                          >
+                            <time className="block text-sm font-normal leading-none text-zinc-400">
+                              {new Date(position.startDate).toLocaleDateString(
+                                language,
+                                {
+                                  year: 'numeric',
+                                  month: 'long',
+                                },
+                              )}
+                              {' - '}
+                              {position.endDate
+                                ? new Date(position.endDate).toLocaleDateString(
+                                    language,
+                                    {
+                                      year: 'numeric',
+                                      month: 'long',
+                                    },
+                                  )
+                                : 'Present'}
+                            </time>
+                          </section>
 
                           <p className="mb-4 last-of-type:mb-0 text-sm font-normal text-zinc-300">
                             {position.summary[language]
