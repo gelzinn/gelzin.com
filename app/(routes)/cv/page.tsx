@@ -203,14 +203,43 @@ export default function CVPage() {
                         />
                       </span>
 
-                      <h3 className="flex flex-col items-start pl-8 mb-4 text-lg font-normal gap-2">
+                      <h3 className="flex flex-col items-start pl-8 text-lg font-normal gap-2">
                         <div className="flex flex-wrap items-center gap-4 w-full">
-                          <strong
-                            className="inline-flex items-center gap-2 font-medium text-zinc-50 print:text-zinc-950"
+                          <div
+                            className="flex flex-col items-start gap-1"
                             aria-label="Company"
                           >
-                            {experience.company}
-                          </strong>
+                            <strong
+                              className="inline-flex items-center gap-2 font-medium text-zinc-50 print:text-zinc-950"
+                              aria-label="Company"
+                            >
+                              {experience.company}
+                            </strong>
+
+                            <small
+                              className="block text-xs font-light text-zinc-400"
+                              aria-label="Total time working at the company"
+                            >
+                              {(() => {
+                                const oldest = experience.positions.sort(
+                                  (a, b) =>
+                                    new Date(a.startDate).getTime() -
+                                    new Date(b.startDate).getTime(),
+                                )[0];
+
+                                const latest = experience.positions.sort(
+                                  (a, b) =>
+                                    new Date(b.startDate).getTime() -
+                                    new Date(a.startDate).getTime(),
+                                )[0];
+
+                                return formatDuration(
+                                  new Date(oldest.startDate),
+                                  new Date(latest.endDate || new Date()),
+                                );
+                              })()}
+                            </small>
+                          </div>
 
                           <div
                             className="flex items-center justify-center gap-2 size-4"
@@ -250,21 +279,22 @@ export default function CVPage() {
                           )}
                         </div>
 
-                        <section
-                          className="flex flex-wrap gap-2"
-                          aria-label="Modalities"
-                        >
-                          {experience.modalities &&
-                            experience.modalities.length > 0 &&
-                            experience.modalities.map((modality, index) => (
-                              <span
-                                key={index}
-                                className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-xs font-light w-auto px-2 py-1 bg-zinc-900 border border-zinc-800 text-zinc-50 print:text-zinc-950 first-of-type:ms-0 sm:first-of-type:ms-auto ms-4"
-                              >
-                                {modality}
-                              </span>
-                            ))}
-                        </section>
+                        {experience.modalities &&
+                          experience.modalities.length > 0 && (
+                            <section
+                              className="flex flex-wrap gap-2 mt-2"
+                              aria-label="Modalities"
+                            >
+                              {experience.modalities.map((modality, index) => (
+                                <span
+                                  key={index}
+                                  className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-xs font-light w-auto px-2 py-1 bg-zinc-900 border border-zinc-800 text-zinc-50 print:text-zinc-950 first-of-type:ms-0 sm:first-of-type:ms-auto ms-4"
+                                >
+                                  {modality}
+                                </span>
+                              ))}
+                            </section>
+                          )}
                       </h3>
 
                       {experience.positions.map((position, index) => (
