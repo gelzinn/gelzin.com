@@ -26,17 +26,17 @@ export default function ProjectsPage() {
             rel="noopener noreferrer"
             className="flex flex-col items-start justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium p-4 bg-zinc-900 border border-zinc-800 text-zinc-50 hover:bg-zinc-800 hover:border-zinc-700 transition-colors duration-200 ease-in-out disabled:opacity-50"
           >
-            <div className="group relative w-full min-h-24 aspect-w-16 aspect-h-9 rounded-lg border border-zinc-800">
+            <div className="group relative w-full min-h-24 aspect-w-16 aspect-h-9">
               <img
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover rounded-lg border border-zinc-800"
                 src={project.image}
                 alt={project.name}
               />
 
-              <div className="absolute left-4 -bottom-8 w-full flex items-center justify-between max-w-[calc(100%-2rem)] mx-auto gap-2">
-                <div className="bg-zinc-900/50 rounded-md border border-zinc-800 w-fit">
+              <div className="absolute left-2 -bottom-8 w-full flex items-center justify-between max-w-[calc(100%-2rem)] mx-auto gap-2">
+                <div className="w-fit rounded-lg bg-zinc-900 border border-zinc-800 overflow-hidden">
                   <img
-                    className="min-w-16 size-16 aspect-square object-cover rounded-md group-hover:shadow-lg transition-shadow duration-200 ease-in-out"
+                    className="min-w-16 size-16 aspect-square object-cover group-hover:shadow-lg transition-shadow duration-200 ease-in-out"
                     src={project.favicon}
                     alt={project.name}
                   />
