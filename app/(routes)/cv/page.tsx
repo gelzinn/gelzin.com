@@ -81,7 +81,7 @@ export default function CVPage() {
               <picture className="relative flex shrink-0 overflow-hidden rounded-md size-24 bg-zinc-900 border border-zinc-800">
                 <img
                   className="aspect-square h-full w-full pointer-events-none select-none"
-                  alt="@gelzin on LinkedIn"
+                  alt="@gelzin on GitHub"
                   src="https://github.com/gelzinn.png"
                   width="128"
                   height="128"
@@ -90,9 +90,13 @@ export default function CVPage() {
               </picture>
 
               <div className="flex flex-col items-start justify-center gap-1 w-full text-pretty mb-2">
-                <h1 className="text-2xl">{user ? user.name : 'gelzin'}</h1>
+                <h1 className="text-2xl">
+                  {loading ? 'Loading...' : user?.login || 'gelzin'}
+                </h1>
                 <span className="text-xs md:text-base text-zinc-400">
-                  {user ? user.bio : 'Software Engineer'}
+                  {loading
+                    ? 'Loading...'
+                    : user?.bio || 'Developer and UX/UI Designer'}
                 </span>
               </div>
             </div>
