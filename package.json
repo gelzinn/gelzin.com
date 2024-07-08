@@ -25,14 +25,14 @@
     "clsx": "1.2.1",
     "html2canvas": "^1.4.1",
     "jspdf": "^2.5.1",
-    "lucide-react": "0.307.0",
+    "lucide-react": "0.378.0",
     "next": "14.2.3",
     "pnpm": "8.4.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
   "devDependencies": {
-    "@ianvs/prettier-plugin-sort-imports": "^4.2.1",
+    "@ianvs/prettier-plugin-sort-imports": "^4.3.0",
     "@tailwindcss/line-clamp": "^0.4.4",
     "@tailwindcss/typography": "^0.5.13",
     "@types/node": "20.10.8",
@@ -42,13 +42,13 @@
     "eslint": "^8.57.0",
     "eslint-config-next": "14.0.4",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-react": "^7.34.1",
-    "eslint-plugin-tailwindcss": "^3.15.1",
-    "postcss": "^8.4.38",
-    "prettier": "^3.2.5",
+    "eslint-plugin-react": "^7.34.3",
+    "eslint-plugin-tailwindcss": "^3.17.4",
+    "postcss": "^8.4.39",
+    "prettier": "^3.3.2",
     "prettier-plugin-tailwindcss": "^0.5.14",
     "pretty-quick": "^3.3.1",
-    "tailwindcss": "^3.4.3",
-    "typescript": "^5.4.5"
+    "tailwindcss": "^3.4.4",
+    "typescript": "^5.5.3"
   }
 }

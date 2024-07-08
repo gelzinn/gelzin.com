@@ -1,12 +1,11 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
+
 import { ReactNode } from 'react';
 
 import { Inter } from 'next/font/google';
+const inter = Inter({ subsets: ['latin'] });
 
 import '../styles/globals.css';
-import { DocumentSizeContextProvider } from '@/contexts/DocumentSizeContext';
-
-const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'gelzin · Software Engineer and UX/UI Designer',
@@ -19,7 +18,17 @@ export const metadata: Metadata = {
   ],
   applicationName: 'gelzin',
   keywords: ['software', 'engineer', 'ux', 'ui', 'designer'],
-  themeColor: '#080808',
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#FAFAFA' },
+    { media: '(prefers-color-scheme: dark)', color: '#080808' },
+  ],
+  colorScheme: 'dark',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
@@ -70,7 +79,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body
         className={`${inter.className} overflow-x-hidden bg-zinc-50 text-zinc-950 dark:bg-black dark:text-zinc-50`}
       >
-        <DocumentSizeContextProvider>{children}</DocumentSizeContextProvider>
+        {children}
       </body>
     </html>
   );

@@ -39,17 +39,19 @@ export const about: TAbout = {
   },
   location: {
     'en-US': {
-      city: 'São Paulo',
+      city: 'Jaú',
       state: 'SP',
       country: 'Brazil',
       full: 'São Paulo, Brazil',
     },
     'pt-BR': {
-      city: 'São Paulo',
+      city: 'Jaú',
       state: 'SP',
       country: 'Brasil',
       full: 'São Paulo, Brasil',
     },
-    google_maps: 'https://google.com/maps/place/Mineiros+do+Tiet%C3%AA',
+    google_maps: `https://www.google.com/maps/place/${encodeURIComponent(
+      'Jaú, São Paulo, Brazil',
+    )}`,
   },
 };

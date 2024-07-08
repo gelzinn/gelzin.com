@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Icon } from '@/components/icon';
 import { about, experiences, skills, social } from '@/config';
@@ -27,20 +27,37 @@ const formatDuration = (startDate: Date, endDate: Date) => {
 };
 
 export default function CVPage() {
+  const [user, setUser] = useState<null | any>(null);
+  const [loading, setLoading] = useState(false);
+
   const [language] = useState<'en-US' | 'pt-BR'>('en-US');
 
   const handlePrint = () => window.print();
 
-  // const handleChangeLanguage = () => {
-  //   const newLanguage = language === 'en-US' ? 'pt-BR' : 'en-US';
-  //   setLanguage(newLanguage);
-  // };
+  const fetchUser = async () => {
+    try {
+      setLoading(true);
+
+      const response = await fetch('https://api.github.com/users/gelzin');
+      const data = await response.json();
+
+      setUser(data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
   return (
-    <main className="relative mx-auto w-full max-w-4xl print:max-w-max h-fit min-h-dvh p-0 md:px-8 md:py-16 transition-all duration-200 ease-in-out">
-      <div className="mx-auto w-full bg-zinc-950 md:border border-zinc-800 print:border-none print:border-t-0 divide-y divide-zinc-800 md:rounded-xl overflow-hidden">
+    <main className="relative mx-auto w-full max-w-4xl print:max-w-max h-fit min-h-dvh p-0 md:p-8 transition-all duration-200 ease-in-out">
+      <div className="mx-auto w-full max-w-4xl bg-zinc-950 md:border border-zinc-800 print:border-none print:border-t-0 divide-y divide-zinc-800 md:rounded-xl overflow-hidden">
         <header
-          className="flex items-center justify-between gap-2 p-4 print:hidden bg-zinc-900/50"
+          className="flex items-center justify-start gap-2 p-4 print:hidden bg-zinc-900/50"
           aria-label="Header"
         >
           <a
@@ -50,36 +67,18 @@ export default function CVPage() {
             <Icon name="ArrowLeft" className="w-4 h-4 text-zinc-50" />
             <span>{language === 'en-US' ? 'Back' : 'Voltar'}</span>
           </a>
-
-          <div className="flex" aria-label="Actions">
-            <button
-              className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium px-3 py-1.5 bg-zinc-900 border border-zinc-800 text-zinc-50 hover:bg-zinc-800 hover:border-zinc-700 transition-colors duration-200 ease-in-out disabled:opacity-50 rounded-e-none z-[1]"
-              // onClick={handleChangeLanguage}
-              disabled
-            >
-              <Icon name="Globe" className="w-4 h-4 text-zinc-50" />
-              <span>{language !== 'en-US' ? 'Português' : 'English'}</span>
-            </button>
-
-            <button
-              className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium px-3 py-1.5 bg-zinc-900 border border-zinc-800 text-zinc-50 hover:bg-zinc-800 hover:border-zinc-700 transition-colors duration-200 ease-in-out pointer-events-none disabled:opacity-50 rounded-s-none -ml-px z-0"
-              disabled
-            >
-              {language === 'en-US' ? 'US' : 'BR'}
-            </button>
-          </div>
         </header>
 
         <div
-          className="w-full max-w-4xl space-y-8 p-4 md:p-8 max-md:pb-24 max-md:mb-2"
+          className="w-full space-y-8 p-4 md:p-8 max-md:pb-24 mb-8"
           aria-label="CV"
         >
           <section
             className="flex flex-col w-full gap-y-4"
             aria-label="Information"
           >
-            <div className="flex flex-col sm:flex-row items-start justify-center sm:justify-between gap-4">
-              <picture className="relative flex shrink-0 overflow-hidden rounded-xl size-32 bg-zinc-900 border border-zinc-800">
+            <div className="flex flex-1 flex-col sm:flex-row items-stretch justify-center sm:justify-between gap-4">
+              <picture className="relative flex shrink-0 overflow-hidden rounded-md size-24 bg-zinc-900 border border-zinc-800">
                 <img
                   className="aspect-square h-full w-full pointer-events-none select-none"
                   alt="@gelzin on LinkedIn"
@@ -90,45 +89,11 @@ export default function CVPage() {
                 />
               </picture>
 
-              <div className="flex-1 space-y-2">
-                <h1 className="inline-flex items-center gap-2 text-2xl text-pretty font-medium">
-                  <strong>Marcelo Augusto</strong>
-                  <span
-                    className="text-xs md:text-base text-zinc-400"
-                    title="gelzin"
-                  >
-                    gelzin
-                  </span>
-                </h1>
-
-                <div
-                  className="flex flex-wrap gap-4 md:gap-2 text-sm"
-                  aria-label="Description"
-                >
-                  <p className="w-full text-pretty text-sm text-zinc-400 print:text-zinc-950">
-                    {about.description[language]
-                      .split('\n')
-                      .map((line, index) => (
-                        <span
-                          key={index}
-                          className="block first-of-type:mt-0 mt-4"
-                        >
-                          {line}
-                        </span>
-                      ))}
-                  </p>
-
-                  <p className="max-w-md items-center text-pretty text-xs">
-                    <a
-                      className="inline-flex items-center gap-x-1.5 leading-none hover:underline"
-                      href={about.location.google_maps}
-                      target="_blank"
-                    >
-                      <Icon name="MapPin" className="w-4 h-4" />
-                      <span>{about.location[language].full}</span>
-                    </a>
-                  </p>
-                </div>
+              <div className="flex flex-col items-start justify-center gap-1 w-full text-pretty mb-2">
+                <h1 className="text-2xl">{user ? user.name : 'gelzin'}</h1>
+                <span className="text-xs md:text-base text-zinc-400">
+                  {user ? user.bio : 'Software Engineer'}
+                </span>
               </div>
             </div>
 
@@ -190,17 +155,28 @@ export default function CVPage() {
                       key={index}
                     >
                       <span
-                        className="absolute flex items-center justify-center w-8 h-8 rounded-full -start-4 ring-1 ring-zinc-800 bg-zinc-950"
+                        className="absolute flex items-center justify-center size-8 rounded-full -start-4 ring-1 ring-zinc-800 bg-zinc-900"
                         title={isActive ? 'Current Active' : 'Inactive'}
                       >
-                        <Icon
-                          name="Briefcase"
-                          className={`w-4 h-4 ${
-                            isActive
-                              ? 'text-zinc-50 print:text-zinc-950'
-                              : 'text-zinc-700 print:text-zinc-500'
-                          }`}
-                        />
+                        <div className="flex items-center justify-center size-4 text-sm text-zinc-400 pointer-events-none">
+                          <div
+                            className="flex items-center justify-center gap-2 size-4"
+                            aria-label="Status"
+                            title={isActive ? 'Active' : 'Inactive'}
+                          >
+                            {isActive ? (
+                              <div className="relative inline-flex items-center justify-center gap-2 font-medium text-zinc-50 print:text-zinc-950 size-full">
+                                <div className="relative w-2 h-2 rounded-full bg-emerald-500">
+                                  <div className="absolute top-0 right-0 w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
+                                </div>
+                              </div>
+                            ) : (
+                              <div className="relative inline-flex items-center justify-center gap-2 font-medium text-zinc-50 print:text-zinc-950 size-full">
+                                <div className="relative w-2 h-2 rounded-full bg-zinc-500/50" />
+                              </div>
+                            )}
+                          </div>
+                        </div>
                       </span>
 
                       <h3 className="flex flex-col items-start pl-8 text-lg font-normal gap-2">
@@ -239,24 +215,6 @@ export default function CVPage() {
                                 );
                               })()}
                             </small>
-                          </div>
-
-                          <div
-                            className="flex items-center justify-center gap-2 size-4"
-                            aria-label="Status"
-                            title={isActive ? 'Active' : 'Inactive'}
-                          >
-                            {isActive ? (
-                              <div className="relative inline-flex items-center justify-center gap-2 font-medium text-zinc-50 print:text-zinc-950 size-full">
-                                <div className="relative w-2 h-2 rounded-full bg-emerald-500">
-                                  <div className="absolute top-0 right-0 w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
-                                </div>
-                              </div>
-                            ) : (
-                              <div className="relative inline-flex items-center justify-center gap-2 font-medium text-zinc-50 print:text-zinc-950 size-full">
-                                <div className="relative w-2 h-2 rounded-full bg-rose-500/50" />
-                              </div>
-                            )}
                           </div>
 
                           {experience.website && (
@@ -377,9 +335,16 @@ export default function CVPage() {
                 .map((item, index) => (
                   <span
                     key={index}
-                    className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium cursor-default w-auto px-2 py-1 bg-zinc-900 border border-zinc-800 text-zinc-50 print:text-zinc-950"
+                    className="group relative inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium cursor-default w-auto px-2 py-1 bg-zinc-900 border border-zinc-800 print:text-zinc-950"
                   >
-                    {item}
+                    <Icon
+                      name="Check"
+                      className="size-4 text-zinc-500 group-hover:text-emerald-500 group-hover:scale-125 transition-all duration-200 ease-in-out"
+                    />
+
+                    <span className="text-zinc-400 group-hover:text-zinc-50 transition-colors duration-200 ease-in-out">
+                      {item}
+                    </span>
                   </span>
                 ))}
             </div>
@@ -387,13 +352,17 @@ export default function CVPage() {
         </div>
 
         <footer
-          className="fixed left-4 right-4 bottom-4 md:left-0 md:right-0 md:bottom-0 z-10 max-md:w-[calc(100%-2rem)] w-full md:relative flex items-center justify-between gap-2 print:hidden rounded-xl md:rounded-none md:z-0 max-md:border-hidden"
+          className="flex z-10 print:hidden w-full h-auto px-8 py-6 bg-zinc-950/50 border-t border-zinc-800 md:rounded-b-xl mx-auto"
           aria-label="Print and Save as PDF"
-        >
-          <div className="md:hidden block fixed left-0 right-0 bottom-0 w-screen h-24 bg-gradient-to-t from-zinc-950 via-zinc-950 to-zinc-950/0 -z-10" />
+          style={{
+            backdropFilter: 'blur(8px)',
+            WebkitBackdropFilter: 'blur(8px)',
 
+            maxWidth: 'calc(56rem - 4rem)',
+          }}
+        >
           <section
-            className="flex flex-wrap items-center justify-center sm:justify-between w-full border md:border-0 border-zinc-800 bg-zinc-900/50 gap-2 p-4 rounded-xl md:rounded-none backdrop-blur-lg"
+            className="flex flex-wrap items-center justify-center sm:justify-between w-full h-full gap-2 rounded-xl md:rounded-none"
             aria-label="Last updated"
           >
             <div className="flex items-center gap-2" aria-label="Last updated">

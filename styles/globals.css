@@ -16,32 +16,22 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-*::-webkit-scrollbar {
-  width: 0.25rem;
+::-webkit-scrollbar {
+  width: 6px;
+  border-radius: 10px;
 }
 
-*::-webkit-scrollbar-track {
-  background: rgb(244 63 94 / 0.1);
+::-webkit-scrollbar-track {
+  background: none;
 }
 
-*::-webkit-scrollbar-thumb {
-  background: rgb(244 63 94 / 1);
+::-webkit-scrollbar-thumb {
+  background: rgb(255 255 255 / 10%);
+  border-radius: 10px;
 }
 
-*::-webkit-scrollbar-thumb:hover {
-  background: rgb(244 63 94 / 0.8);
-}
-
-*::-webkit-scrollbar-thumb:active {
-  background: rgb(244 63 94 / 0.6);
-}
-
-*::-webkit-scrollbar-thumb:vertical {
-  border-radius: 0.25rem;
-}
-
-*::-webkit-scrollbar-thumb:horizontal {
-  border-radius: 0.25rem;
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(255 255 255 / 15%);
 }
 
 @layer components {
