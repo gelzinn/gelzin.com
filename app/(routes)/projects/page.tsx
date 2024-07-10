@@ -54,6 +54,7 @@ export default function ProjectsPage() {
                       alt={project.name}
                       width="640"
                       height="360"
+                      loading="lazy"
                     />
 
                     <div className="absolute left-2 -bottom-8 w-full flex items-center justify-between max-w-[calc(100%-2rem)] mx-auto gap-2">
