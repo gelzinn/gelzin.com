@@ -47,11 +47,13 @@ export default function ProjectsPage() {
                   rel="noopener noreferrer"
                   className="flex flex-col items-start justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium p-2 bg-zinc-900 border border-zinc-800 text-zinc-50 hover:bg-zinc-800 hover:border-zinc-700 transition-colors duration-200 ease-in-out disabled:opacity-50"
                 >
-                  <div className="group relative w-full min-h-24 aspect-w-16 aspect-h-9">
+                  <div className="group relative w-full min-w-full aspect-video rounded-lg">
                     <img
-                      className="w-full h-full object-cover rounded-lg border border-zinc-800"
+                      className="w-full h-full object-cover rounded-lg border border-zinc-800 transition-transform duration-200 ease-in-out group-hover:scale-[101%]"
                       src={project.image}
                       alt={project.name}
+                      width="640"
+                      height="360"
                     />
 
                     <div className="absolute left-2 -bottom-8 w-full flex items-center justify-between max-w-[calc(100%-2rem)] mx-auto gap-2">
