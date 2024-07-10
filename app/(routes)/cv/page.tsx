@@ -31,6 +31,7 @@ export default function CVPage() {
   const [loading, setLoading] = useState(false);
 
   const [language] = useState<'en-US' | 'pt-BR'>('en-US');
+  const username = 'gelzinn';
 
   const handlePrint = () => window.print();
 
@@ -38,7 +39,7 @@ export default function CVPage() {
     try {
       setLoading(true);
 
-      const response = await fetch('https://api.github.com/users/gelzin');
+      const response = await fetch(`https://api.github.com/users/${username}`);
       const data = await response.json();
 
       setUser(data);
@@ -81,8 +82,8 @@ export default function CVPage() {
               <picture className="relative flex shrink-0 overflow-hidden rounded-md size-24 bg-zinc-900 border border-zinc-800">
                 <img
                   className="aspect-square h-full w-full pointer-events-none select-none"
-                  alt="@gelzin on GitHub"
-                  src="https://github.com/gelzinn.png"
+                  alt={`@${username} on GitHub`}
+                  src={`https://github.com/${username}.png`}
                   width="128"
                   height="128"
                   loading="lazy"
@@ -90,14 +91,15 @@ export default function CVPage() {
               </picture>
 
               <div className="flex flex-col items-start justify-center gap-1 w-full text-pretty mb-2">
-                <h1 className="text-2xl">
-                  {loading ? 'Loading...' : user?.login || 'gelzin'}
-                </h1>
-                <span className="text-xs md:text-base text-zinc-400">
-                  {loading
-                    ? 'Loading...'
-                    : user?.bio || 'Developer and UX/UI Designer'}
-                </span>
+                <h1 className="text-2xl">{user?.name || username}</h1>
+
+                {loading || !user?.bio ? (
+                  <span className="bg-zinc-900 border border-zinc-800 animate-pulse w-48 h-5 rounded-md" />
+                ) : (
+                  <span className="text-xs md:text-base text-zinc-400">
+                    {user.bio}
+                  </span>
+                )}
               </div>
             </div>
 
@@ -343,7 +345,7 @@ export default function CVPage() {
                   >
                     <Icon
                       name="Check"
-                      className="size-4 text-zinc-500 group-hover:text-emerald-500 group-hover:scale-125 transition-all duration-200 ease-in-out"
+                      className="size-4 text-zinc-500 group-hover:text-emerald-500 group-hover:scale-110 transition-all duration-200 ease-in-out"
                     />
 
                     <span className="text-zinc-400 group-hover:text-zinc-50 transition-colors duration-200 ease-in-out">
