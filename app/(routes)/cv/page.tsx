@@ -3,7 +3,8 @@
 import { useEffect, useState } from 'react';
 
 import { Icon } from '@/components/icon';
-import { about, experiences, skills, social } from '@/config';
+import { about, experiences, skills, social, type Social } from '@/config';
+import { Button } from '@/components/button';
 
 const formatDuration = (startDate: Date, endDate: Date) => {
   const start = new Date(startDate);
@@ -61,13 +62,10 @@ export default function CVPage() {
           className="flex items-center justify-start gap-2 p-4 print:hidden bg-zinc-900/50"
           aria-label="Header"
         >
-          <a
-            href="/"
-            className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium px-3 py-1.5 bg-zinc-900 border border-zinc-800 text-zinc-50 hover:bg-zinc-800 hover:border-zinc-700 transition-colors duration-200 ease-in-out disabled:opacity-50"
-          >
+          <Button isLink href="/">
             <Icon name="ArrowLeft" className="w-4 h-4 text-zinc-50" />
             <span>{language === 'en-US' ? 'Back' : 'Voltar'}</span>
-          </a>
+          </Button>
         </header>
 
         <div
@@ -93,46 +91,25 @@ export default function CVPage() {
               <div className="flex flex-col items-start justify-center gap-1 w-full text-pretty mb-2">
                 <h1 className="text-2xl">{user?.name || username}</h1>
 
-                {loading || !user?.bio ? (
+                {loading || !user ? (
                   <span className="bg-zinc-900 border border-zinc-800 animate-pulse w-48 h-5 rounded-md" />
                 ) : (
-                  <span className="text-xs md:text-base text-zinc-400">
-                    {user.bio}
-                  </span>
+                  <>
+                    <span className="text-xs md:text-base text-zinc-400">
+                      {user?.bio || username}
+                    </span>
+
+                    <SocialSection
+                      social={social}
+                      className="hidden print:flex"
+                      disableFilters
+                    />
+                  </>
                 )}
               </div>
             </div>
 
-            <div className="flex flex-wrap gap-2 pt-1 font-mono text-sm print:hidden">
-              {social.map((item, index) => {
-                const url = item.url.split('/')[item.url.split('/').length - 1];
-
-                return (
-                  <a
-                    key={index}
-                    title={item.name}
-                    href={item.url}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    className={`inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium p-1.5 bg-zinc-900 border border-zinc-800 text-zinc-50 hover:bg-zinc-800 hover:border-zinc-700 transition-colors duration-200 ease-in-out ${item.classNames}`}
-                  >
-                    <img
-                      src={item.icon}
-                      alt={item.name}
-                      width="16"
-                      height="16"
-                      loading="lazy"
-                      className="w-4 max-w-4 h-4 max-h-4 object-contain pointer-events-none select-none"
-                      style={item.filter ? { filter: item.filter } : {}}
-                    />
-
-                    <span className="text-xs inline-flex items-center justify-center ml-2">
-                      {url}
-                    </span>
-                  </a>
-                );
-              })}
-            </div>
+            <SocialSection social={social} className="print:hidden" />
           </section>
 
           <section
@@ -233,7 +210,7 @@ export default function CVPage() {
                             >
                               <Icon
                                 name="ExternalLink"
-                                className="size-4 text-zinc-400"
+                                className="size-4 text-zinc-400 group-hover:text-zinc-50 group-hover:scale-110 transition-all duration-200 ease-in-out"
                               />
 
                               <span className="sr-only">
@@ -372,13 +349,13 @@ export default function CVPage() {
             aria-label="Last updated"
           >
             <div className="flex items-center gap-2" aria-label="Last updated">
-              <a
+              <Button
                 href={
                   about.business_email
                     ? `mailto:${about.business_email}`
                     : `mailto:${about.email}`
                 }
-                className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium px-3 py-1.5 bg-zinc-900 border border-zinc-800 text-zinc-50 hover:bg-zinc-800 hover:border-zinc-700 transition-colors duration-200 ease-in-out disabled:opacity-50"
+                isLink
               >
                 <Icon name="Mail" className="w-4 h-4 text-zinc-50" />
                 <span>Let&apos;s chat!</span>
@@ -386,21 +363,17 @@ export default function CVPage() {
                 <div className="relative w-2 h-2 rounded-full bg-emerald-500 ml-1">
                   <div className="absolute top-0 right-0 w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
                 </div>
-              </a>
+              </Button>
             </div>
 
             <div
               className="hidden sm:flex flex-wrap gap-2"
               aria-label="Actions"
             >
-              <button
-                className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium px-3 py-1.5 bg-zinc-900 border border-zinc-800 text-zinc-50 hover:bg-zinc-800 hover:border-zinc-700 transition-colors duration-200 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-zinc-900 disabled:hover:border-zinc-800"
-                disabled
-                onClick={handlePrint}
-              >
+              <Button onClick={handlePrint}>
                 <Icon name="Printer" className="w-4 h-4 text-zinc-50" />
                 <span>Print</span>
-              </button>
+              </Button>
             </div>
           </section>
         </footer>
@@ -408,3 +381,49 @@ export default function CVPage() {
     </main>
   );
 }
+
+const SocialSection = ({
+  social,
+  className,
+  disableFilters,
+}: {
+  social: Social[];
+  className?: string;
+  disableFilters?: boolean;
+}) => {
+  return (
+    <div className={`flex flex-wrap gap-2 pt-1 font-mono text-sm ${className}`}>
+      {social.map((item, index) => {
+        const url = item.url.split('/')[item.url.split('/').length - 1];
+        const filters = disableFilters ? '' : item.filter;
+
+        return (
+          <a
+            key={index}
+            title={item.name}
+            href={item.url}
+            target="_blank"
+            rel="noreferrer noopener"
+            className={`inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium p-1.5 bg-zinc-900 border border-zinc-800 text-zinc-50 hover:bg-zinc-800 hover:border-zinc-700 transition-colors duration-200 ease-in-out ${item.classNames}`}
+          >
+            <img
+              src={item.icon}
+              alt={item.name}
+              width="16"
+              height="16"
+              loading="lazy"
+              className="w-4 max-w-4 h-4 max-h-4 object-contain pointer-events-none select-none"
+              style={{
+                filter: filters,
+              }}
+            />
+
+            <span className="text-xs inline-flex items-center justify-center ml-2 print:text-zinc-700">
+              {url}
+            </span>
+          </a>
+        );
+      })}
+    </div>
+  );
+};

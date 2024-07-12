@@ -1,11 +1,3 @@
-type TSocial = {
-  name: string;
-  url: string;
-  icon: string;
-  filter?: string;
-  classNames?: string;
-};
-
 export const social = [
   {
     name: 'gelzin',
@@ -39,3 +31,5 @@ export const social = [
     filter: 'invert(1)',
   },
 ];
+
+export type Social = (typeof social)[number];

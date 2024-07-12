@@ -1,3 +1,5 @@
+import { Button } from './components/button';
+
 export default function Home() {
   return (
     <main className="flex flex-col items-center justify-center gap-8 w-full min-h-dvh mx-auto p-4 md:p-8">
@@ -10,19 +12,13 @@ export default function Home() {
       />
 
       <div className="mt-auto inline-flex items-center justify-center gap-2">
-        <a
-          href="/cv"
-          className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium px-3 py-1.5 bg-zinc-900 border border-zinc-800 text-zinc-50 hover:bg-zinc-800 hover:border-zinc-700 transition-colors duration-200 ease-in-out disabled:opacity-50"
-        >
+        <Button isLink href="/cv">
           <span>Resume</span>
-        </a>
+        </Button>
 
-        <a
-          href="/projects"
-          className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium px-3 py-1.5 bg-zinc-900 border border-zinc-800 text-zinc-50 hover:bg-zinc-800 hover:border-zinc-700 transition-colors duration-200 ease-in-out disabled:opacity-50"
-        >
+        <Button isLink href="/projects">
           <span>Projects</span>
-        </a>
+        </Button>
       </div>
     </main>
   );
