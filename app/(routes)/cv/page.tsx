@@ -138,27 +138,51 @@ export default function CVPage() {
                       key={index}
                     >
                       <span
-                        className="absolute flex items-center justify-center size-8 rounded-full -start-4 ring-1 ring-zinc-800 bg-zinc-900"
+                        className={`absolute flex items-center justify-center size-8 rounded-full -start-4 ring-1 ring-zinc-800 bg-zinc-900 ${`bg-[${experience.favicon?.background}]`} z-10`}
                         title={isActive ? 'Current Active' : 'Inactive'}
                       >
-                        <div className="flex items-center justify-center size-4 text-sm text-zinc-400 pointer-events-none">
-                          <div
-                            className="flex items-center justify-center gap-2 size-4"
-                            aria-label="Status"
-                            title={isActive ? 'Active' : 'Inactive'}
+                        {experience.favicon && (
+                          <picture
+                            className="relative flex items-center justify-center size-full p-1 bg-zinc-950 rounded-full overflow-hidden pointer-events-none select-none"
+                            style={{
+                              background:
+                                experience.favicon.background || '#000',
+                            }}
                           >
-                            {isActive ? (
-                              <div className="relative inline-flex items-center justify-center gap-2 font-medium text-zinc-50 print:text-zinc-950 size-full">
-                                <div className="relative w-2 h-2 rounded-full bg-emerald-500">
-                                  <div className="absolute top-0 right-0 w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
-                                </div>
+                            <img
+                              src={experience.favicon.url}
+                              alt={experience.company}
+                              width="24"
+                              height="24"
+                              loading="lazy"
+                              className="size-full aspect-square object-contain pointer-events-none select-none"
+                              style={{
+                                transform: `scale(${experience.favicon.zoom || 1})`,
+                              }}
+                            />
+                          </picture>
+                        )}
+
+                        <div
+                          className={`${
+                            experience.favicon
+                              ? 'absolute -top-1 -right-1'
+                              : 'relative'
+                          } flex items-center justify-center gap-2 size-4`}
+                          aria-label="Status"
+                          title={isActive ? 'Active' : 'Inactive'}
+                        >
+                          {isActive ? (
+                            <div className="relative inline-flex items-center justify-center gap-2 font-medium text-zinc-50 print:text-zinc-950 size-full">
+                              <div className="relative w-2 h-2 rounded-full bg-emerald-500">
+                                <div className="absolute top-0 right-0 w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
                               </div>
-                            ) : (
-                              <div className="relative inline-flex items-center justify-center gap-2 font-medium text-zinc-50 print:text-zinc-950 size-full">
-                                <div className="relative w-2 h-2 rounded-full bg-zinc-500/50" />
-                              </div>
-                            )}
-                          </div>
+                            </div>
+                          ) : (
+                            <div className="relative inline-flex items-center justify-center gap-2 font-medium text-zinc-50 print:text-zinc-950 size-full">
+                              <div className="relative w-2 h-2 rounded-full bg-zinc-700" />
+                            </div>
+                          )}
                         </div>
                       </span>
 

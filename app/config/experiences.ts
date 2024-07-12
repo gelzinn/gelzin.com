@@ -20,6 +20,11 @@ type TPosition = {
 
 type TExperience = {
   company: string;
+  favicon?: {
+    url: string;
+    background?: string;
+    zoom?: number;
+  };
   website?: string;
   modalities?: string[];
   active: boolean;
@@ -33,8 +38,14 @@ type TExperience = {
 export const experiences: TExperience[] = [
   {
     company: 'Loopscape',
+    favicon: {
+      url: 'https://loopscape.com.br/loopscape-logo.svg',
+      background: '#ffffff',
+      zoom: 0.85,
+    },
     website: 'https://loopscape.com.br',
     active: true,
+    modalities: ['On-site'],
     positions: [
       {
         title: 'Front-End Developer',
@@ -141,6 +152,10 @@ export const experiences: TExperience[] = [
   },
   {
     company: 'C.A.Mundial',
+    favicon: {
+      url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-53zQ4Gp2Y9M3S5BueOCzjB-FN-8uGe-AtA&s',
+      background: '#010a19',
+    },
     website: 'https://camundial.com.br',
     active: false,
     modalities: ['Remote'],
