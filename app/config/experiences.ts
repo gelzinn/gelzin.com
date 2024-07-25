@@ -37,13 +37,13 @@ type TExperience = {
 
 export const experiences: TExperience[] = [
   {
-    company: 'Loopscape',
+    company: 'LoopVet',
     favicon: {
-      url: 'https://loopscape.com.br/loopscape-logo.svg',
+      url: 'https://app.loopvet.com.br/favicon.ico',
       background: '#ffffff',
       zoom: 0.85,
     },
-    website: 'https://loopscape.com.br',
+    website: 'https://loopvet.com.br',
     active: true,
     modalities: ['On-site'],
     positions: [
@@ -104,6 +104,11 @@ export const experiences: TExperience[] = [
   },
   {
     company: 'Freelancer',
+    favicon: {
+      url: 'https://gelzin.com/gelzin.svg',
+      background: '#000',
+      zoom: 0.65,
+    },
     website: 'https://gelzin.com',
     active: true,
     modalities: ['Remote'],

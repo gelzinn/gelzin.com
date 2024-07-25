@@ -2,7 +2,7 @@ export const projects = [
   {
     name: 'carteira.live',
     url: 'https://carteira.live',
-    image: 'https://app.carteira.live/og.jpg',
+    image: 'https://app.carteira.live/api/screenshot/carteira.live',
     favicon: {
       url: 'https://app.carteira.live/favicon.ico',
     },
@@ -15,7 +15,7 @@ export const projects = [
   {
     name: 'NoteX',
     url: 'https://notex.live',
-    image: 'https://img001.prntscr.com/file/img001/TFb2q6eZQzW5Hn7VmupRyg.png',
+    image: 'https://app.carteira.live/api/screenshot/notex.live',
     favicon: {
       url: 'https://notex.live/favicons/favicon-light.png',
       background: '#FFFFFF',
